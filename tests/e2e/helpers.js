@@ -36,6 +36,10 @@ export async function setup(t, configure = () => {}) {
 
 export function assertMouthClosed(env) {
   env.frames();
+  if (env.config.face?.style === 'photo') {
+    assert.equal(env.mouth.getAttribute('display'), 'none');
+    return;
+  }
   const numbers = text => text.match(/-?\d+(?:\.\d+)?(?:e[+-]?\d+)?/gi).map(Number);
   const expected = numbers(env.closed);
   numbers(env.mouth.getAttribute('d')).forEach((value, i) => assert.ok(Math.abs(value - expected[i]) < 1e-8));

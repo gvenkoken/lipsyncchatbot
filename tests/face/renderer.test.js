@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { FaceRenderer } from '../../web/src/face/index.js';
@@ -88,4 +90,99 @@ test('invalid geometry, colors, sources and state never reach SVG attributes', (
   for (const node of [face.svg, face.group, ...face.group.children]) {
     for (const value of node.attributes.values()) assert.doesNotMatch(value, /NaN|Infinity|script|onload/);
   }
+});
+
+const photoConfig = JSON.parse(readFileSync(path.resolve(process.cwd(), 'web/config/lypsync.config.json'), 'utf8'));
+
+test('photo mode never creates whites or pupils and ignores gaze offsets', () => {
+  const face = renderer(photoConfig);
+  assert.equal(face.photo, true);
+  assert.ok(face.eyes.every(eye => !eye.white && !eye.pupil));
+  assert.equal(face.group.children.filter(node => node.tagName === 'ELLIPSE').length, 0);
+  const nodes = [face.group, ...face.group.children, ...face.eyes.flatMap(eye => [eye.lid, eye.lash])];
+  const before = nodes.map(node => [...node.attributes]);
+  face.render({ pupil: { x: { current: 1 }, y: { current: -1 } } });
+  assert.deepEqual(nodes.map(node => [...node.attributes]), before);
+});
+
+test('photo lids follow calibrated eye boxes, soften edges and cover fully on closure', () => {
+  const face = renderer(photoConfig);
+  const state = new FaceState();
+  const defs = face.group.children.find(node => node.tagName === 'DEFS');
+  const filter = defs.children[0];
+  assert.equal(filter.children[0].tagName, 'FEGAUSSIANBLUR');
+  assert.equal(filter.children[0].getAttribute('stdDeviation'), '0.6');
+  for (const amount of [0, 0.5, 1]) {
+    state.eyelid.current = amount;
+    face.render(state);
+    face.eyes.forEach((eye, i) => {
+      const config = photoConfig.eyes[i];
+      const left = config.x - config.width / 2;
+      const right = config.x + config.width / 2;
+      const top = config.y - config.height / 2;
+      const bottom = top + config.height * amount;
+      const edge = bottom - config.height * amount * (1 - amount) * 0.5;
+      assert.equal(eye.lid.getAttribute('d'), `M ${left} ${top} H ${right} V ${edge} Q ${config.x} ${2 * bottom - edge} ${left} ${edge} Z`);
+      assert.equal(eye.lid.getAttribute('fill'), config.lidColor);
+      assert.equal(eye.lid.getAttribute('display'), amount === 0 ? 'none' : 'inline');
+      assert.equal(eye.lash.getAttribute('display'), amount === 0 ? 'none' : 'inline');
+      assert.equal(eye.lash.getAttribute('stroke'), '#3A2A22');
+      assert.equal(eye.lash.getAttribute('stroke-width'), '1.5');
+      assert.equal(eye.lid.getAttribute('filter'), `url(#${filter.getAttribute('id')})`);
+      assert.equal(eye.lash.getAttribute('filter'), eye.lid.getAttribute('filter'));
+    });
+  }
+});
+
+test('photo mouth stays hidden below threshold and uses the specified ellipse dimensions', () => {
+  const face = renderer(photoConfig);
+  const state = new FaceState();
+  for (const width of [0, 0.5, 1]) for (const round of [0, 0.7, 1]) {
+    state.mouth.width.current = width;
+    state.mouth.round.current = round;
+    let previousHeight = 0;
+    for (const open of [0, 0.049, 0.05, 0.3, 0.8]) {
+      state.mouth.open.current = open;
+      face.render(state);
+      assert.equal(face.mouthPath.getAttribute('display'), open < 0.05 ? 'none' : 'inline');
+      const values = face.mouthPath.getAttribute('d').match(/-?\d+(?:\.\d+)?(?:e[+-]?\d+)?/gi).map(Number);
+      const expectedWidth = photoConfig.mouth.width * (0.5 + 0.3 * width) * (1 - 0.3 * round);
+      const expectedHeight = photoConfig.mouth.width * open * 0.4;
+      assert.ok(Math.abs(values[2] * 2 - expectedWidth) < 1e-9);
+      assert.ok(Math.abs(values[3] * 2 - expectedHeight) < 1e-9);
+      assert.ok(expectedHeight >= previousHeight);
+      previousHeight = expectedHeight;
+    }
+  }
+  assert.equal(face.mouthPath.getAttribute('fill'), '#2A1414');
+  assert.equal(face.mouthPath.getAttribute('opacity'), '0.85');
+  assert.equal(face.mouthPath.getAttribute('stroke'), photoConfig.mouth.lipColor);
+  assert.equal(face.mouthPath.getAttribute('stroke-width'), '1.5');
+  assert.equal(face.mouthPath.getAttribute('filter'), face.eyes[0].lid.getAttribute('filter'));
+});
+
+test('explicit drawn style and omitted style produce identical traditional layers', () => {
+  const serialize = node => [node.tagName, [...node.attributes], node.children.map(serialize)];
+  assert.deepEqual(serialize(renderer({ face: { style: 'drawn' } }).svg), serialize(renderer().svg));
+});
+
+test('configuration updates preserve nodes in photo mode and can switch styles', () => {
+  const face = renderer(photoConfig);
+  const mouth = face.mouthPath;
+  const lid = face.eyes[0].lid;
+  const config = structuredClone(photoConfig);
+  config.eyes[0].x += 10;
+  config.eyes[0].lidColor = '#ABCDEF';
+  config.mouth.lipColor = '#123456';
+  face.updateConfig(config);
+  assert.equal(face.mouthPath, mouth);
+  assert.equal(face.eyes[0].lid, lid);
+  assert.equal(lid.getAttribute('fill'), '#ABCDEF');
+  assert.equal(face.eyes[0].x, config.eyes[0].x);
+  assert.equal(mouth.getAttribute('stroke'), '#123456');
+  assert.equal(mouth.getAttribute('display'), 'none');
+  face.updateConfig({ ...config, face: { style: 'drawn' } });
+  assert.ok(face.eyes.every(eye => eye.white && eye.pupil));
+  face.updateConfig(config);
+  assert.ok(face.eyes.every(eye => !eye.white && !eye.pupil));
 });

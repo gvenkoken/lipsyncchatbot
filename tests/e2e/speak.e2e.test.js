@@ -10,7 +10,7 @@ for (const parts of [['Merhaba.'], ['Pembe bir balon buldum.', 'Onu büyük bir 
     // The paragraph starts with a closed /p/ viseme (90 ms). Advance the
     // fake frames into the following vowel before checking the rendered path.
     env.frames(12);
-    assert.notEqual(env.mouth.getAttribute('d'), env.closed);
+    assert.equal(env.mouth.getAttribute('display'), 'inline');
     env.speech.emitEnd(); assertReady(env);
     const count = env.speech.calls.length; env.clock.advance(2000);
     assert.equal(env.speech.calls.length, count);
@@ -21,7 +21,7 @@ test('AC08.3: replacement cancels, closes mouth and rejects stale end', async t 
   const env = await setup(t); await env.open();
   env.say('Pembe bir balon buldum. Uzun bir konuşma başlıyor.');
   env.speech.emitStart(); env.frames(12);
-  assert.notEqual(env.mouth.getAttribute('d'), env.closed);
+  assert.equal(env.mouth.getAttribute('display'), 'inline');
   const stale = [...env.speech.listeners.get('end')];
   let cancellations = 0;
   const cancel = env.speech.cancel.bind(env.speech);
@@ -62,7 +62,7 @@ test('empty text is ignored; rate and pitch reach SpeechPort', async t => {
 });
 
 test('AC15.5: changed fetched coordinates update the SVG when the panel reopens', async t => {
-  const env = await setup(t);
+  const env = await setup(t, config => { config.face.style = 'drawn'; });
   await env.open();
   const geometry = group => ({
     mouth: group.children.at(-1).getAttribute('d'),
