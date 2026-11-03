@@ -21,7 +21,15 @@ export function createWidget({ document, conversation, speech, config, renderer 
   const status = ui.createStatus(document);
   const close = () => { open = false; panel.setOpen(false); toggle.setExpanded(false); conversation.close(); renderer.render(); status.setStatus('ready'); };
   const panel = ui.createCharacterPanel(document, { onClose: close });
-  const toggle = ui.createPanelToggle(document, { panelId: 'character-panel', onChange: expanded => { speech.unlock(); if (!expanded) return close(); open = true; panel.setOpen(true); status.setStatus('greeting'); opened = conversation.open(); } });
+  const toggle = ui.createPanelToggle(document, { panelId: 'character-panel', onChange: expanded => {
+    speech.unlock(); if (!expanded) return close();
+    open = true; panel.setOpen(true); status.setStatus('greeting');
+    const opening = conversation.open();
+    const sessionId = conversation.sessionId;
+    opened = opening.then(() => {
+      if (open && conversation.sessionId === sessionId) renderer.updateConfig(conversation.config);
+    });
+  } });
   panel.setOpen(false);
   const stage = ui.createCharacterStage(document);
   const frame = stage.children[0]; frame.textContent = ''; frame.appendChild(renderer.svg);
