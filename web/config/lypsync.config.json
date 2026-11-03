@@ -1,0 +1,10 @@
+{
+  "greeting": { "text": "Merhaba! Ben Akilay.", "delayMs": 1500 },
+  "speech": { "lang": "tr-TR", "rate": 1, "pitch": 1 },
+  "body": { "src": "assets/owner/akilay2-removebg-preview-1.png", "width": 463, "height": 539 },
+  "mouth": { "x": 232, "y": 223, "width": 54, "lipColor": "#985D50" },
+  "eyes": [
+    { "x": 198, "y": 150, "width": 35, "height": 16, "irisColor": "#45382F" },
+    { "x": 270, "y": 150, "width": 35, "height": 16, "irisColor": "#45382F" }
+  ]
+}
