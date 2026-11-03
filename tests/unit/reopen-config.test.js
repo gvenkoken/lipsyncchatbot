@@ -38,8 +38,8 @@ test('each panel opening fetches validated face settings and warns on invalid fi
   })));
   assert.equal(warnings.length, 1);
   assert.match(warnings[0], /varsayılan/);
-  assert.equal(renderer.mouth.x, 232);
-  assert.equal(renderer.eyes[0].white.getAttribute('rx'), '17.5');
+  assert.equal(renderer.mouth.x, 236);
+  assert.equal(renderer.eyes[0].white.getAttribute('rx'), '15');
   assert.equal(renderer.mouthPath.getAttribute('fill'), '#123456');
   assert.equal(renderer.group.children.length, 8);
   assert.equal(renderer.svg.children.length, 1);
