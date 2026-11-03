@@ -1,4 +1,6 @@
 import { applyTheme } from './theme/index.js';
+import { createComparison } from './comparison/index.js';
+import { comparisonStyles } from './comparison/styles.js';
 import { loadConfig } from './config/config-loader.js';
 import { BrowserSpeech } from './speech/browser-speech.js';
 import { disposeVoiceSelector } from './voice/index.js';
@@ -12,7 +14,7 @@ import { styles, screenStyles } from './widget/styles.js';
 export function mountApp({ document, window, fetch = globalThis.fetch, speech: suppliedSpeech, clock = window, config: suppliedConfig }) {
   const root = document.getElementById('app');
   if (document.documentElement) applyTheme(document);
-  const style = document.createElement('style'); style.textContent = styles + screenStyles;
+  const style = document.createElement('style'); style.textContent = styles + screenStyles + comparisonStyles;
   (document.head ?? root).appendChild(style);
   const speech = suppliedSpeech ?? new BrowserSpeech({ synthesis: window.speechSynthesis, Utterance: window.SpeechSynthesisUtterance });
   let disposed = false;
@@ -29,10 +31,10 @@ export function mountApp({ document, window, fetch = globalThis.fetch, speech: s
       else link.removeAttribute('aria-current');
     });
     if (comparison) {
-      const section = document.createElement('section'); const heading = document.createElement('h2'); const description = document.createElement('p');
-      heading.textContent = 'Karakter görseli karşılaştırması'; description.textContent = 'Görsel karşılaştırma ekranı burada hazırlanacak (T12).'; section.appendChild(heading); section.appendChild(description); root.appendChild(section); return;
+      root.appendChild(createComparison(document)); return;
     }
-    if (!config) { const section = document.createElement('section'); const heading = document.createElement('h2'); const loading = document.createElement('p'); heading.textContent = 'Karakter testi'; loading.textContent = document.createElementNS ? 'Karakter testi (T11) yükleniyor…' : 'Karakter testi (T11) için SVG destekleyen bir tarayıcı gerekiyor.'; section.appendChild(heading); section.appendChild(loading); root.appendChild(section); return; }
+    const comparisonLink = document.createElement('a'); comparisonLink.textContent = 'Görsel karşılaştırması'; comparisonLink.setAttribute('href', '#karsilastirma');
+    if (!config) { const section = document.createElement('section'); const heading = document.createElement('h2'); const loading = document.createElement('p'); heading.textContent = 'Karakter testi'; loading.textContent = document.createElementNS ? 'Karakter testi (T11) yükleniyor…' : 'Karakter testi (T11) için SVG destekleyen bir tarayıcı gerekiyor.'; section.appendChild(heading); section.appendChild(loading); section.appendChild(comparisonLink); root.appendChild(section); return; }
     const animator = new FaceAnimator({ clock });
     const liveliness = new LivelinessScheduler({ animator, clock: clock.now ? clock : { now: () => window.performance.now() } });
     const renderer = new FaceRenderer(config, { document });
@@ -42,6 +44,7 @@ export function mountApp({ document, window, fetch = globalThis.fetch, speech: s
     detach = animator.subscribe(state => renderer.render(state));
     widget = createWidget({ document, speech, config, renderer, conversation });
     root.appendChild(widget.element);
+    widget.element.children[0].appendChild(comparisonLink);
   }
   window.addEventListener('hashchange', render);
   render();
