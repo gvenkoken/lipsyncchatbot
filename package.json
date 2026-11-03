@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.js",
+    "posttest": "node --test tests/e2e/*.e2e.test.js",
     "start": "node scripts/serve.mjs"
   }
 }
