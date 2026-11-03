@@ -6,11 +6,55 @@ import { loadConfig } from '../../web/src/config/config-loader.js';
 
 const config = JSON.parse(await readFile(resolve(process.cwd(), 'web/config/lypsync.config.json'), 'utf8'));
 const copy = () => structuredClone(config);
+const defaultConfig = { ...config, face: { style: "drawn" } };
 const response = value => ({ ok: true, json: async () => value });
 function logger() {
   const messages = [];
   return { messages, warn: message => messages.push(message) };
 }
+
+test('face style accepts photo and drawn; missing or invalid styles warn and fall back', async () => {
+  for (const style of ['photo', 'drawn', undefined, 'cartoon']) {
+    const input = copy();
+    input.face = style === undefined ? {} : { style };
+    const log = logger();
+    const result = await loadConfig(async () => response(input), log);
+    assert.equal(result.face.style, style === 'photo' ? 'photo' : 'drawn');
+    assert.equal(log.messages.length, style === undefined || style === 'cartoon' ? 1 : 0);
+    if (log.messages.length) assert.match(log.messages[0], /varsayılan/);
+  }
+  const input = copy();
+  delete input.face;
+  const log = logger();
+  assert.equal((await loadConfig(async () => response(input), log)).face.style, 'drawn');
+  assert.equal(log.messages.length, 1);
+});
+
+test('lidColor preserves six-digit hex colors and defaults missing or invalid values', async () => {
+  for (const value of [undefined, 'red', '#ABC', '#AABBCC', '#aabbcc']) {
+    const input = copy();
+    for (const eye of input.eyes) {
+      if (value === undefined) delete eye.lidColor;
+      else eye.lidColor = value;
+    }
+    const result = await loadConfig(async () => response(input), logger());
+    const expected = ['#AABBCC', '#aabbcc'].includes(value) ? value : '#C8937A';
+    assert.deepEqual(result.eyes.map(eye => eye.lidColor), [expected, expected]);
+  }
+});
+
+test('file and defaults contain measured face coordinates with distinct styles', async () => {
+  const fallback = await loadConfig(async () => response({}), logger());
+  assert.equal(config.face.style, 'photo');
+  assert.equal(fallback.face.style, 'drawn');
+  for (const source of [config, fallback]) {
+    assert.deepEqual(source.mouth, { x: 236, y: 221, width: 50, lipColor: '#985D50' });
+    assert.deepEqual(source.eyes.map(({ x, y, width, height }) => ({ x, y, width, height })), [
+      { x: 201, y: 150, width: 30, height: 14 },
+      { x: 270, y: 149, width: 30, height: 14 }
+    ]);
+  }
+});
 
 test('her yükleme önbelleksiz GET yapar ve yeni selamlamayı okur', async () => {
   const calls = [];
@@ -78,7 +122,7 @@ test('bozuk JSON, başarısız HTTP ve okuma hatası varsayılanlarla devam eder
   ];
   for (const fetchFn of failures) {
     const log = logger();
-    assert.deepEqual(await loadConfig(fetchFn, log), config);
+    assert.deepEqual(await loadConfig(fetchFn, log), defaultConfig);
     assert.equal(log.messages.length, 1);
   }
 });
@@ -92,5 +136,5 @@ test('sonuçlar birbirinden bağımsızdır; eksik göz ve geçersiz boyut tamam
   assert.deepEqual(first, config);
   first.eyes[0].x = 999;
   first.body.width = 999;
-  assert.deepEqual(await loadConfig(async () => response({}), logger()), config);
+  assert.deepEqual(await loadConfig(async () => response({}), logger()), defaultConfig);
 });
