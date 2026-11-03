@@ -120,9 +120,12 @@ test('photo lids follow calibrated eye boxes, soften edges and cover fully on cl
       const left = config.x - config.width / 2;
       const right = config.x + config.width / 2;
       const top = config.y - config.height / 2;
-      const bottom = top + config.height * amount;
-      const edge = bottom - config.height * amount * (1 - amount) * 0.5;
-      assert.equal(eye.lid.getAttribute('d'), `M ${left} ${top} H ${right} V ${edge} Q ${config.x} ${2 * bottom - edge} ${left} ${edge} Z`);
+      const closed = config.y + config.height * 0.35;
+      const edge = top + (closed - top) * amount;
+      // Almond lid: both edges meet at the eye corners; the lash edge moves from the upper arc to the lower lash line.
+      assert.equal(eye.lid.getAttribute('d'), `M ${left} ${config.y} Q ${config.x} ${2 * top - config.y} ${right} ${config.y} Q ${config.x} ${2 * edge - config.y} ${left} ${config.y} Z`);
+      assert.equal(eye.lash.getAttribute('d'), `M ${left} ${config.y} Q ${config.x} ${2 * edge - config.y} ${right} ${config.y}`);
+      assert.doesNotMatch(eye.lid.getAttribute('d'), /[HV]/);
       assert.equal(eye.lid.getAttribute('fill'), config.lidColor);
       assert.equal(eye.lid.getAttribute('display'), amount === 0 ? 'none' : 'inline');
       assert.equal(eye.lash.getAttribute('display'), amount === 0 ? 'none' : 'inline');

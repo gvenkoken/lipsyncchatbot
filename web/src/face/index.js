@@ -113,14 +113,15 @@ export class FaceRenderer {
     const eyelid = current(state.eyelid, 0, 0);
     for (const eye of this.eyes) {
       if (this.photo) {
+        // An almond-shaped lid that meets at the eye corners: its upper edge follows the upper eyelid arc and its lower
+        // (lash) edge moves from that arc down to the lower lash line as the eye closes. No straight edges, no box.
         const left = eye.x - eye.width / 2;
         const right = eye.x + eye.width / 2;
         const top = eye.y - eye.height / 2;
-        const bottom = top + eye.height * eyelid;
-        // The curved edge flattens at full closure to cover the entire eye box.
-        const edge = bottom - eye.height * eyelid * (1 - eyelid) * 0.5;
-        eye.lid.setAttribute('d', `M ${left} ${top} H ${right} V ${edge} Q ${eye.x} ${2 * bottom - edge} ${left} ${edge} Z`);
-        eye.lash.setAttribute('d', `M ${left} ${edge} Q ${eye.x} ${2 * bottom - edge} ${right} ${edge}`);
+        const closed = eye.y + eye.height * 0.35;
+        const edge = top + (closed - top) * eyelid;
+        eye.lid.setAttribute('d', `M ${left} ${eye.y} Q ${eye.x} ${2 * top - eye.y} ${right} ${eye.y} Q ${eye.x} ${2 * edge - eye.y} ${left} ${eye.y} Z`);
+        eye.lash.setAttribute('d', `M ${left} ${eye.y} Q ${eye.x} ${2 * edge - eye.y} ${right} ${eye.y}`);
         for (const node of [eye.lid, eye.lash]) node.setAttribute('display', eyelid === 0 ? 'none' : 'inline');
         continue;
       }
