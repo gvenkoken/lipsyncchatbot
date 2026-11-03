@@ -61,9 +61,7 @@ test('empty text is ignored; rate and pitch reach SpeechPort', async t => {
   assert.equal(env.speech.calls[0].options.pitch, 0.7);
 });
 
-test('AC15.5: changed fetched coordinates update the SVG when the panel reopens', {
-  todo: 'Reopening reloads conversation config, but FaceRenderer retains its initial geometry; application changes are outside this task scope.'
-}, async t => {
+test('AC15.5: changed fetched coordinates update the SVG when the panel reopens', async t => {
   const env = await setup(t);
   await env.open();
   const geometry = group => ({
@@ -80,9 +78,15 @@ test('AC15.5: changed fetched coordinates update the SVG when the panel reopens'
   env.config.mouth.x += 8;
   env.config.mouth.y += 6;
   env.config.mouth.width += 4;
+  env.config.mouth.lipColor = '#123456';
+  env.config.body.width += 20;
+  env.config.body.height += 30;
   for (const eye of env.config.eyes) {
     eye.x += 5;
     eye.y += 3;
+    eye.width += 4;
+    eye.height += 2;
+    eye.irisColor = '#654321';
   }
   const requestCount = env.requests.length;
   await env.open();
@@ -95,6 +99,18 @@ test('AC15.5: changed fetched coordinates update the SVG when the panel reopens'
   assert.deepEqual(geometry(group), {
     mouth: `M ${x - half} ${y} Q ${x} ${y} ${x + half} ${y} Q ${x} ${y} ${x - half} ${y} Z`,
     eyes: env.config.eyes.map(eye => ({ x: String(eye.x), y: String(eye.y) }))
+  });
+  const svg = env.widget.panel.element.children[1].children[0].children[0];
+  assert.equal(svg.getAttribute('viewBox'), `0 0 ${env.config.body.width} ${env.config.body.height}`);
+  assert.equal(svg.children.length, 1);
+  assert.equal(group.children.length, 8);
+  assert.equal(group.children.at(-1).getAttribute('fill'), env.config.mouth.lipColor);
+  assert.equal(group.children.at(-1).getAttribute('stroke'), env.config.mouth.lipColor);
+  env.config.eyes.forEach((eye, index) => {
+    assert.equal(group.children[index + 1].getAttribute('rx'), String(eye.width / 2));
+    assert.equal(group.children[index + 1].getAttribute('ry'), String(eye.height / 2));
+    assert.equal(group.children[index + 3].getAttribute('fill'), eye.irisColor);
+    assert.equal(group.children[index + 3].getAttribute('rx'), String(eye.height * 0.3));
   });
   const updated = geometry(group);
   assert.notEqual(updated.mouth, previous.mouth);

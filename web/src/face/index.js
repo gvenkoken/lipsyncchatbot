@@ -9,6 +9,7 @@ const current = (channel, fallback = 0, min = -1, max = 1) =>
 /** Append svg to the stage; render consumes the smoothed FaceState channels. */
 export class FaceRenderer {
   constructor(config = {}, { document = globalThis.document } = {}) {
+    this.document = document;
     const element = (tag, attributes = {}) => {
       const node = document.createElementNS(NS, tag);
       for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, String(value));
@@ -42,6 +43,24 @@ export class FaceRenderer {
     this.mouth = { x: number(mouth.x, 232, 0), y: number(mouth.y, 223, 0), width: number(mouth.width, 54, 1) };
     this.mouthPath = element('path', { fill: color(mouth.lipColor, '#985D50'), stroke: color(mouth.lipColor, '#985D50'), 'stroke-width': 2, 'stroke-linecap': 'round' });
     this.group.appendChild(this.mouthPath);
+    this.render();
+  }
+
+  updateConfig(config) {
+    // Keep the renderer identity used by the animator and the existing SVG nodes.
+    const updated = new FaceRenderer(config, { document: this.document });
+    this.center = updated.center;
+    this.mouth = updated.mouth;
+    this.svg.setAttribute('viewBox', updated.svg.getAttribute('viewBox'));
+    const image = this.group.children[0];
+    for (const key of ['href', 'width', 'height']) image.setAttribute(key, updated.group.children[0].getAttribute(key));
+    this.eyes.forEach((eye, index) => {
+      const next = updated.eyes[index];
+      for (const key of ['x', 'y', 'width', 'height']) eye[key] = next[key];
+      for (const key of ['cx', 'cy', 'rx', 'ry']) eye.white.setAttribute(key, next.white.getAttribute(key));
+      eye.pupil.setAttribute('fill', next.pupil.getAttribute('fill'));
+    });
+    for (const key of ['fill', 'stroke']) this.mouthPath.setAttribute(key, updated.mouthPath.getAttribute(key));
     this.render();
   }
 
