@@ -1,80 +1,59 @@
-# Lypsync
+# Avatar Atölyesi
 
-Derleme adımı ve harici paket gerektirmeyen ES modülü iskeleti.
-Node.js 20 veya üzeri ve npm yeterlidir. Paket kurulumu gerekmez.
+React + TypeScript + Vite ile hazırlanan, backend gerektirmeyen avatar prototipi.
+T01 kapsamında üç yer tutucu ekran ve test altyapısı bulunur. Ses adaptörü,
+animasyon motoru ve gerçek ekran kontrolleri sonraki görevlerin kapsamındadır.
 
-Depo kökünde `npm start` çalıştırın ve http://localhost:8080 adresini açın.
-Sunucu yalnızca `web/` klasörünü sunar. Durdurmak için Ctrl+C kullanın.
-`file://` ile açmak desteklenmez; ES modülleri HTTP üzerinden yüklenmelidir.
+## Çalıştırma
 
-`npm test`, `node:test` ile `tests/` altındaki ve alt klasörlerindeki bütün
-testleri bir kez çalıştırır, ardından uçtan uca (`*.e2e.test.js`) testleri
-çalıştırır. Dosyaları `scripts/run-tests.mjs` listeler; böylece Node.js'in
-sürüme göre değişen dizin ve glob davranışına bağlı kalınmaz.
-Harici paket veya internet bağlantısı gerekmez. Smoke testi yerel, rastgele
-bir port kullanır ve sunucuyu test sonunda kapatır.
-
-`#karakter-testi` (T11) ve `#karsilastirma` (T12) yer tutucuları açar.
-Boş veya bilinmeyen hash, karakter testini gösterir. Görsel ekranlar ve
-tasarım sistemi sonraki görevlerde eklenecektir.
-`tests/helpers/` sahte DOM, Clock ve Random yardımcılarını içerir.
-
-## Ses kalitesi
-
-Seslendirme tarayıcının kendi Türkçe seslerini kullanır; kalite büyük ölçüde
-hangi sesin kurulu olduğuna bağlıdır. Otomatik seçim en doğal sesi seçer:
-önce Edge'in "Online (Natural)" sinir ağı sesleri, sonra Apple'ın indirilen
-Premium/Enhanced sesleri, sonra Chrome'un "Google Türkçe" sesi, en son temel
-sistem sesi. Panelin "Ses" listesinden başka bir Türkçe ses seçilebilir.
-
-macOS'ta daha doğal bir ses için: Sistem Ayarları → Erişilebilirlik →
-Seslendirilen İçerik → Sistem sesi → Sesleri Yönet → Türkçe → Yelda
-(Gelişmiş/Premium) indirin, ardından tarayıcıyı yeniden başlatın.
-
-Ağız hareketi her cümlenin gerçek başlangıcında yeniden hizalanır, kelime
-olayları geldiğinde kelime başına düzeltilir ve sesin ölçülen hızı sonraki
-cümlelere uygulanır. Metindeki emoji ve markdown işaretleri okunmaz; satır
-sonları cümle sonu gibi okunur.
-
-## Fotoğraf karakterde ağız ve göz
-
-Fotoğraf modunda (`face.style: "photo"`) yüzün üstüne şekil çizilmez;
-fotoğrafın kendisi WebGL ile esnetilir (`web/src/face/photo-mesh.js`,
-`photo-gl.js`). Ağız dudak çizgisinden ayrılır: alt dudak ve çene iner, üst
-dudak hafifçe kalkar, aradaki açıklıkta ağız içi ve geniş açılışta üst dişler
-görünür; köşeler birleşik kalır. Göz kırpmada göz kapağının kendi derisi
-kirpik çizgisiyle birlikte alt kirpiğe kadar kayar. Ağız kapalı ve göz
-açıkken görüntü fotoğrafla birebir aynıdır. WebGL olmayan tarayıcıda SVG
-katmanları yedek olarak kullanılır.
-
-Konumlar ayar dosyasındaki `mouth` (dudak çizgisinin ortası ve genişliği) ve
-`eyes` (göz ortası, köşeden köşeye genişlik, üst kapak kenarından alt kapağa
-yükseklik) değerlerinden gelir; başka bir fotoğrafta bunları ölçüp girin.
-
-## Ideafactra canlı önizlemesi ve Docker Compose
-
-Ideafactra canlı önizlemesi depo kökündeki `compose.yaml` dosyasını kullanır.
-Docker Compose ile çalıştırmak için depo kökünde:
+Node.js 22 ve npm kullanın. Komutları web/ içinde çalıştırın:
 
 ```sh
-export APP_PORT=8080
-docker compose up --build
+cd web
+npm install
+npm run dev
 ```
 
-Uygulamayı `http://127.0.0.1:${APP_PORT}` adresinde açın (`APP_PORT=8080`
-için http://127.0.0.1:8080). Ayrı bir terminalde aynı portu ayarlayıp
-hazır olma kontrolünü çalıştırın:
+Bu checkout'ta kilit dosyası üretilmedi. İlk kurulum npm install ile yapılır;
+oluşan package-lock.json saklandıktan sonra temiz klonlarda npm ci kullanılır.
+Tamamen çevrimdışı kurulum için bağımlılıkların npm önbelleğinde bulunması gerekir
+(npm ci --offline). Uygulama çalışma sırasında HTTP API, CDN, uzak yazı tipi
+veya üçüncü taraf betik çağırmaz.
 
 ```sh
-export APP_PORT=8080
-curl --fail -i "http://127.0.0.1:${APP_PORT}/health/ready"
+npm run build
+npm test
+npm run e2e
+npx playwright test --list
 ```
 
-`GET` ve `HEAD /health/ready` istekleri HTTP 200 döndürür. Compose da bu
-adresi healthcheck için kullanır. Durdurmak için Ctrl+C, kaynakları kaldırmak
-için `docker compose down` kullanın.
+build, TypeScript kontrolünü ve Vite üretim derlemesini çalıştırır. test,
+Vitest'i tek sefer çalıştırır; src/**/*.test.ts, src/**/*.test.tsx ve
+tests/**/*.test.ts dosyalarını jsdom ortamında kapsar. Testler ağ gerektirmez.
+Rota testleri doğrudan açılışı, menüyle geçişi ve etkin bağlantıyı doğrular.
 
-Yerel sunucu `PORT` ve `HOST` ortam değişkenlerini okur; varsayılanları
-sırasıyla `8080` ve `localhost` değerleridir. `npm start` ile çalıştırma
-geçerliliğini korur. Konteynerde bu değerler `PORT=8080` ve `HOST=0.0.0.0`
-olarak ayarlanır; `APP_PORT` yalnızca ana makinedeki erişim portunu belirler.
+e2e öncesinde üretim derlemesini hazırlayın. Playwright, Vite preview sunucusunu
+127.0.0.1:4173 üzerinde başlatır ve test sonunda kapatır. Chromium, Firefox ve
+WebKit projeleri aynı gezinme smoke testini çalıştırır. Bu tarayıcıların önceden
+ortama kurulmuş olması gerekir; test komutları tarayıcı indirmez.
+--list komutu üç projenin testlerini sunucu başlatmadan listeler.
+
+## Rotalar ve statik varlıklar
+
+- /: Avatar deneme alanı (T12 yer tutucusu).
+- /kalite: Kalite ve ortam kaydı (T13 yer tutucusu).
+- /gorsel: Görsel ve kaynak incelemesi (T14 yer tutucusu).
+
+Vite publicDir ayarı depo kökündeki assets/ dizinini kullanır. Örneğin
+assets/owner/avatar.png, aynı kaynaktan /owner/avatar.png olarak sunulur
+ve derleme çıktısına değişmeden alınır. Kaynak görseller değiştirilmez.
+Üretim sunucusu istemci rotaları için index.html dosyasına dönüş sağlamalıdır.
+
+## Tasarım kuralları
+
+Sıcak gri zemin, beyaz kartlar ve mor etkin gezinme kullanılır. Sistem yazı
+tipleri ağ gerektirmez. Renk, tipografi, boşluk ve köşe değişkenleri, bu görevin
+izin verdiği ortak konum olan web/src/app/theme.css içindedir; yerleşim
+layout.css üzerinden bu değişkenleri kullanır. Dar ekranda gezinme satırları
+akar; klavye odağı ve içeriğe geç bağlantısı bulunur. Yer tutucular herhangi bir
+kalite sonucu veya insan onayı üretmez.
