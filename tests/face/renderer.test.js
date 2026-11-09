@@ -189,3 +189,26 @@ test('configuration updates preserve nodes in photo mode and can switch styles',
   face.updateConfig(config);
   assert.ok(face.eyes.every(eye => !eye.white && !eye.pupil));
 });
+
+test('photo mode tries WebGL once and keeps the SVG layers when it is unavailable', async () => {
+  const { FaceRenderer: Renderer } = await import('../../web/src/face/index.js');
+  const { createFakeDOM, FakeElement } = await import('../helpers/dom.js');
+  const { document } = createFakeDOM();
+  document.createElementNS = (_, tag) => new FakeElement(tag);
+  let contexts = 0;
+  const create = document.createElement;
+  document.createElement = tag => {
+    const node = create(tag);
+    if (tag === 'canvas') node.getContext = () => { contexts++; return null; };
+    return node;
+  };
+  const config = { face: { style: 'photo' }, mouth: { x: 236, y: 221, width: 50 }, eyes: [{ x: 203, y: 151, width: 30, height: 9 }, { x: 270, y: 148, width: 32, height: 9 }] };
+  const renderer = new Renderer(config, { document });
+  assert.equal(contexts, 1);
+  assert.equal(renderer.canvas, undefined);
+  renderer.updateConfig(config);
+  assert.equal(contexts, 1);
+  renderer.render({ mouth: { open: { current: 0.6 } } });
+  assert.equal(renderer.mouthPath.getAttribute('display'), 'inline');
+  assert.equal(renderer.svg.getAttribute('visibility'), null);
+});

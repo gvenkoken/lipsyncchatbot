@@ -20,10 +20,11 @@ export function mountApp({ document, window, fetch = globalThis.fetch, speech: s
   let disposed = false;
   let widget;
   let detach;
+  let renderer;
   let config;
   const ready = (document.createElementNS ? (suppliedConfig ? Promise.resolve(suppliedConfig) : loadConfig(fetch)) : Promise.resolve()).then(value => { config = value; if (!disposed) render(); });
   function render() {
-    widget?.dispose(); detach?.(); widget = undefined;
+    widget?.dispose(); detach?.(); renderer?.dispose(); widget = undefined; renderer = undefined;
     root.textContent = '';
     const comparison = window.location.hash === '#karsilastirma';
     document.querySelectorAll?.('nav a').forEach(link => {
@@ -37,7 +38,7 @@ export function mountApp({ document, window, fetch = globalThis.fetch, speech: s
     if (!config) { const section = document.createElement('section'); const heading = document.createElement('h2'); const loading = document.createElement('p'); heading.textContent = 'Karakter testi'; loading.textContent = document.createElementNS ? 'Karakter testi (T11) yükleniyor…' : 'Karakter testi (T11) için SVG destekleyen bir tarayıcı gerekiyor.'; section.appendChild(heading); section.appendChild(loading); section.appendChild(comparisonLink); root.appendChild(section); return; }
     const animator = new FaceAnimator({ clock });
     const liveliness = new LivelinessScheduler({ animator, clock: clock.now ? clock : { now: () => window.performance.now() } });
-    const renderer = new FaceRenderer(config, { document });
+    renderer = new FaceRenderer(config, { document });
     const conversation = new WidgetConversation({ speech, animator, liveliness, loadConfig: () => suppliedConfig ? Promise.resolve(suppliedConfig) : loadConfig(fetch), ...(clock.now ? { clock } : {}) });
     const close = conversation.close.bind(conversation);
     conversation.close = () => { close(); for (const channel of Object.values(animator.state.mouth)) channel.current = channel.target; renderer.render(animator.state); };
@@ -48,7 +49,7 @@ export function mountApp({ document, window, fetch = globalThis.fetch, speech: s
   }
   window.addEventListener('hashchange', render);
   render();
-  const unmount = () => { disposed = true; window.removeEventListener('hashchange', render); widget?.dispose(); detach?.(); disposeVoiceSelector(speech); if (!suppliedSpeech) speech.dispose(); style.remove?.(); };
+  const unmount = () => { disposed = true; window.removeEventListener('hashchange', render); widget?.dispose(); detach?.(); renderer?.dispose(); disposeVoiceSelector(speech); if (!suppliedSpeech) speech.dispose(); style.remove?.(); };
   unmount.ready = ready;
   Object.defineProperty(unmount, 'widget', { get: () => widget });
   return unmount;

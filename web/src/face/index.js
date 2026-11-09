@@ -1,3 +1,5 @@
+import { PhotoFace } from './photo-gl.js';
+
 let filterSequence = 0;
 const NS = 'http://www.w3.org/2000/svg';
 const asset = 'assets/owner/akilay2-removebg-preview-1.png';
@@ -7,9 +9,10 @@ const color = (value, fallback) => typeof value === 'string' && /^#[\da-f]{6}$/i
 const current = (channel, fallback = 0, min = -1, max = 1) =>
   Math.max(min, Math.min(max, number(channel?.current, fallback)));
 
-/** Append svg to the stage; render consumes the smoothed FaceState channels. */
+/** Append svg (and canvas, when present) to the stage; render consumes the smoothed FaceState channels.
+ * In photo mode a WebGL canvas animates the photo itself; the SVG layers are the fallback. */
 export class FaceRenderer {
-  constructor(config = {}, { document = globalThis.document } = {}) {
+  constructor(config = {}, { document = globalThis.document, webgl = true } = {}) {
     this.document = document;
     const element = (tag, attributes = {}) => {
       const node = document.createElementNS(NS, tag);
@@ -64,12 +67,36 @@ export class FaceRenderer {
       this.mouthPath.setAttribute('filter', softEdge);
     }
     this.group.appendChild(this.mouthPath);
+    if (this.photo && webgl) {
+      this.photoFace = PhotoFace.create(document, this.geometry(config));
+      this.canvas = this.photoFace?.canvas;
+      if (this.photoFace) this.photoFace.onReady = () => this.render(this.lastState);
+    }
     this.render();
+  }
+
+  dispose() {
+    this.photoFace?.dispose();
+    this.photoFace = null;
+    this.canvas?.remove?.();
+  }
+
+  /** The validated geometry the canvas needs, in the same coordinates as the SVG. */
+  geometry(config) {
+    const body = config.body ?? {};
+    const width = number(body.width, 463, 1);
+    const height = number(body.height, 539, 1);
+    const src = typeof body.src === 'string' && /^\/?assets\/(?:[\w-]+\/)*[\w.-]+\.(?:png|jpe?g|webp)$/i.test(body.src) ? body.src : asset;
+    return {
+      body: { src, width, height },
+      mouth: { ...this.mouth },
+      eyes: this.eyes.map(({ x, y, width: w, height: h }) => ({ x, y, width: w, height: h }))
+    };
   }
 
   updateConfig(config) {
     // Keep the renderer identity used by the animator and the existing SVG nodes.
-    const updated = new FaceRenderer(config, { document: this.document });
+    const updated = new FaceRenderer(config, { document: this.document, webgl: false });
     this.center = updated.center;
     this.mouth = updated.mouth;
     this.svg.setAttribute('viewBox', updated.svg.getAttribute('viewBox'));
@@ -92,13 +119,26 @@ export class FaceRenderer {
       });
     }
     this.photo = updated.photo;
+    if (this.photoFace) {
+      this.photoFace.setConfig(updated.geometry(config));
+      this.canvas.hidden = !this.photo;
+    }
     this.render();
   }
 
   render(state = {}) {
+    this.lastState = state;
     const open = current(state.mouth?.open, 0, 0);
     const width = current(state.mouth?.width, 0.5, 0);
     const round = current(state.mouth?.round, 0, 0);
+    const tilt = current(state.headTilt, 0, -30, 30);
+    const shift = current(state.breath) * 2;
+    if (this.photo && this.photoFace?.render({ open, width, round, eyelid: current(state.eyelid, 0, 0), tilt, shift })) {
+      // The canvas shows the photo and its motion; the SVG copy stays hidden underneath.
+      this.svg.setAttribute('visibility', 'hidden');
+      return;
+    }
+    this.svg.removeAttribute?.('visibility');
     const { x, y } = this.mouth;
     const half = this.mouth.width * (0.5 + width) * (1 - round * 0.4) / 2;
     const depth = this.mouth.width * open * (0.35 + round * 0.25);
@@ -132,6 +172,6 @@ export class FaceRenderer {
       const top = eye.y - eye.height / 2;
       eye.lid.setAttribute('d', `M ${eye.x - eye.width / 2} ${top} H ${eye.x + eye.width / 2} V ${top + eye.height * eyelid} H ${eye.x - eye.width / 2} Z`);
     }
-    this.group.setAttribute('transform', `translate(0 ${current(state.breath) * 2}) rotate(${current(state.headTilt, 0, -30, 30)} ${this.center.x} ${this.center.y})`);
+    this.group.setAttribute('transform', `translate(0 ${shift}) rotate(${tilt} ${this.center.x} ${this.center.y})`);
   }
 }

@@ -36,6 +36,21 @@ olayları geldiğinde kelime başına düzeltilir ve sesin ölçülen hızı son
 cümlelere uygulanır. Metindeki emoji ve markdown işaretleri okunmaz; satır
 sonları cümle sonu gibi okunur.
 
+## Fotoğraf karakterde ağız ve göz
+
+Fotoğraf modunda (`face.style: "photo"`) yüzün üstüne şekil çizilmez;
+fotoğrafın kendisi WebGL ile esnetilir (`web/src/face/photo-mesh.js`,
+`photo-gl.js`). Ağız dudak çizgisinden ayrılır: alt dudak ve çene iner, üst
+dudak hafifçe kalkar, aradaki açıklıkta ağız içi ve geniş açılışta üst dişler
+görünür; köşeler birleşik kalır. Göz kırpmada göz kapağının kendi derisi
+kirpik çizgisiyle birlikte alt kirpiğe kadar kayar. Ağız kapalı ve göz
+açıkken görüntü fotoğrafla birebir aynıdır. WebGL olmayan tarayıcıda SVG
+katmanları yedek olarak kullanılır.
+
+Konumlar ayar dosyasındaki `mouth` (dudak çizgisinin ortası ve genişliği) ve
+`eyes` (göz ortası, köşeden köşeye genişlik, üst kapak kenarından alt kapağa
+yükseklik) değerlerinden gelir; başka bir fotoğrafta bunları ölçüp girin.
+
 ## Ideafactra canlı önizlemesi ve Docker Compose
 
 Ideafactra canlı önizlemesi depo kökündeki `compose.yaml` dosyasını kullanır.

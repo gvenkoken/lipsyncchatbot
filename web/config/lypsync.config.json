@@ -5,7 +5,7 @@
   "face": { "style": "photo" },
   "mouth": { "x": 236, "y": 221, "width": 50, "lipColor": "#985D50" },
   "eyes": [
-    { "x": 202, "y": 150, "width": 28, "height": 12, "irisColor": "#45382F", "lidColor": "#926952" },
-    { "x": 272, "y": 147, "width": 28, "height": 12, "irisColor": "#45382F", "lidColor": "#805C49" }
+    { "x": 203, "y": 151, "width": 30, "height": 9, "irisColor": "#45382F", "lidColor": "#926952" },
+    { "x": 270, "y": 148, "width": 32, "height": 9, "irisColor": "#45382F", "lidColor": "#805C49" }
   ]
 }

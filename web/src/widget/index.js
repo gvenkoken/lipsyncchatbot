@@ -56,7 +56,7 @@ export function createWidget({ document, conversation, speech, config, renderer 
   } });
   panel.setOpen(false);
   const stage = ui.createCharacterStage(document);
-  const frame = stage.children[0]; frame.textContent = ''; frame.appendChild(renderer.svg);
+  const frame = stage.children[0]; frame.textContent = ''; frame.appendChild(renderer.svg); if (renderer.canvas) frame.appendChild(renderer.canvas);
   renderer.group.children[0].addEventListener('error', () => { frame.textContent = ''; frame.appendChild(node('p', 'small muted', 'Karakter görseli yüklenemedi. Özgün dosya bulunamadı.')); });
   const header = panel.element.children[0];
   const heading = header.children[0];

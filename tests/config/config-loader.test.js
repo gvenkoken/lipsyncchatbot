@@ -51,8 +51,8 @@ test('file and defaults contain measured face coordinates with distinct styles',
   for (const source of [config, fallback]) {
     assert.deepEqual(source.mouth, { x: 236, y: 221, width: 50, lipColor: '#985D50' });
     assert.deepEqual(source.eyes.map(({ x, y, width, height }) => ({ x, y, width, height })), [
-      { x: 202, y: 150, width: 28, height: 12 },
-      { x: 272, y: 147, width: 28, height: 12 }
+      { x: 203, y: 151, width: 30, height: 9 },
+      { x: 270, y: 148, width: 32, height: 9 }
     ]);
   }
 });
