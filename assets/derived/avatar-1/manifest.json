@@ -1,0 +1,136 @@
+{
+  "layers": [
+    {
+      "name": "base",
+      "pngPath": "assets/derived/avatar-1/base.png",
+      "anchor": {
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/konusan-avatar-katman-varlik-seti-1.png",
+      "derivationNote": "Sabit nötr kaynaktan kayıpsız kırpım [6, 8, 260, 300]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "eyes-open",
+      "pngPath": "assets/derived/avatar-1/eyes-open.png",
+      "anchor": {
+        "x": 83,
+        "y": 111
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/konusan-avatar-katman-varlik-seti-1.png",
+      "derivationNote": "Sabit nötr kaynaktan kayıpsız kırpım [89, 119, 109, 30]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "eyes-half-open",
+      "pngPath": "assets/derived/avatar-1/eyes-half-open.png",
+      "anchor": {
+        "x": 83,
+        "y": 111
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/konusan-avatar-katman-varlik-seti-1.png",
+      "derivationNote": "türetilecek: hizalanmış poz mevcut değil; nötr yama kullanılır. Sabit nötr kaynaktan kayıpsız kırpım [89, 119, 109, 30]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "eyes-closed",
+      "pngPath": "assets/derived/avatar-1/eyes-closed.png",
+      "anchor": {
+        "x": 83,
+        "y": 111
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/konusan-avatar-katman-varlik-seti-1.png",
+      "derivationNote": "türetilecek: hizalanmış poz mevcut değil; nötr yama kullanılır. Sabit nötr kaynaktan kayıpsız kırpım [89, 119, 109, 30]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "brows-neutral",
+      "pngPath": "assets/derived/avatar-1/brows-neutral.png",
+      "anchor": {
+        "x": 83,
+        "y": 84
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/konusan-avatar-katman-varlik-seti-1.png",
+      "derivationNote": "Sabit nötr kaynaktan kayıpsız kırpım [89, 92, 109, 25]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "mouth-closed",
+      "pngPath": "assets/derived/avatar-1/mouth-closed.png",
+      "anchor": {
+        "x": 104,
+        "y": 157
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/konusan-avatar-katman-varlik-seti-1.png",
+      "derivationNote": "Sabit nötr kaynaktan kayıpsız kırpım [110, 165, 76, 36]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "mouth-A",
+      "pngPath": "assets/derived/avatar-1/mouth-A.png",
+      "anchor": {
+        "x": 104,
+        "y": 157
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/konusan-avatar-katman-varlik-seti-1.png",
+      "derivationNote": "türetilecek: hizalanmış poz mevcut değil; nötr yama kullanılır. Sabit nötr kaynaktan kayıpsız kırpım [110, 165, 76, 36]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "mouth-E",
+      "pngPath": "assets/derived/avatar-1/mouth-E.png",
+      "anchor": {
+        "x": 104,
+        "y": 157
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/konusan-avatar-katman-varlik-seti-1.png",
+      "derivationNote": "türetilecek: hizalanmış poz mevcut değil; nötr yama kullanılır. Sabit nötr kaynaktan kayıpsız kırpım [110, 165, 76, 36]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "mouth-I",
+      "pngPath": "assets/derived/avatar-1/mouth-I.png",
+      "anchor": {
+        "x": 104,
+        "y": 157
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/konusan-avatar-katman-varlik-seti-1.png",
+      "derivationNote": "türetilecek: hizalanmış poz mevcut değil; nötr yama kullanılır. Sabit nötr kaynaktan kayıpsız kırpım [110, 165, 76, 36]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "mouth-O",
+      "pngPath": "assets/derived/avatar-1/mouth-O.png",
+      "anchor": {
+        "x": 104,
+        "y": 157
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/konusan-avatar-katman-varlik-seti-1.png",
+      "derivationNote": "türetilecek: hizalanmış poz mevcut değil; nötr yama kullanılır. Sabit nötr kaynaktan kayıpsız kırpım [110, 165, 76, 36]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "mouth-U",
+      "pngPath": "assets/derived/avatar-1/mouth-U.png",
+      "anchor": {
+        "x": 104,
+        "y": 157
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/konusan-avatar-katman-varlik-seti-1.png",
+      "derivationNote": "türetilecek: hizalanmış poz mevcut değil; nötr yama kullanılır. Sabit nötr kaynaktan kayıpsız kırpım [110, 165, 76, 36]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "mouth-consonant",
+      "pngPath": "assets/derived/avatar-1/mouth-consonant.png",
+      "anchor": {
+        "x": 104,
+        "y": 157
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/konusan-avatar-katman-varlik-seti-1.png",
+      "derivationNote": "türetilecek: hizalanmış poz mevcut değil; nötr yama kullanılır. Sabit nötr kaynaktan kayıpsız kırpım [110, 165, 76, 36]; yeniden ölçekleme yok."
+    }
+  ]
+}

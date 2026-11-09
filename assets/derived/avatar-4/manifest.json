@@ -1,0 +1,136 @@
+{
+  "layers": [
+    {
+      "name": "base",
+      "pngPath": "assets/derived/avatar-4/base.png",
+      "anchor": {
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/yuz-animasyon-sprite-atlasi-4.png",
+      "derivationNote": "Sabit nötr kaynaktan kayıpsız kırpım [8, 12, 360, 590]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "eyes-open",
+      "pngPath": "assets/derived/avatar-4/eyes-open.png",
+      "anchor": {
+        "x": 91,
+        "y": 120
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/yuz-animasyon-sprite-atlasi-4.png",
+      "derivationNote": "Sabit nötr kaynaktan kayıpsız kırpım [99, 132, 150, 40]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "eyes-half-open",
+      "pngPath": "assets/derived/avatar-4/eyes-half-open.png",
+      "anchor": {
+        "x": 91,
+        "y": 120
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/yuz-animasyon-sprite-atlasi-4.png",
+      "derivationNote": "türetilecek: hizalanmış poz mevcut değil; nötr yama kullanılır. Sabit nötr kaynaktan kayıpsız kırpım [99, 132, 150, 40]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "eyes-closed",
+      "pngPath": "assets/derived/avatar-4/eyes-closed.png",
+      "anchor": {
+        "x": 91,
+        "y": 120
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/yuz-animasyon-sprite-atlasi-4.png",
+      "derivationNote": "türetilecek: hizalanmış poz mevcut değil; nötr yama kullanılır. Sabit nötr kaynaktan kayıpsız kırpım [99, 132, 150, 40]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "brows-neutral",
+      "pngPath": "assets/derived/avatar-4/brows-neutral.png",
+      "anchor": {
+        "x": 91,
+        "y": 94
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/yuz-animasyon-sprite-atlasi-4.png",
+      "derivationNote": "Sabit nötr kaynaktan kayıpsız kırpım [99, 106, 150, 26]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "mouth-closed",
+      "pngPath": "assets/derived/avatar-4/mouth-closed.png",
+      "anchor": {
+        "x": 131,
+        "y": 195
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/yuz-animasyon-sprite-atlasi-4.png",
+      "derivationNote": "Sabit nötr kaynaktan kayıpsız kırpım [139, 207, 100, 45]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "mouth-A",
+      "pngPath": "assets/derived/avatar-4/mouth-A.png",
+      "anchor": {
+        "x": 131,
+        "y": 195
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/yuz-animasyon-sprite-atlasi-4.png",
+      "derivationNote": "türetilecek: hizalanmış poz mevcut değil; nötr yama kullanılır. Sabit nötr kaynaktan kayıpsız kırpım [139, 207, 100, 45]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "mouth-E",
+      "pngPath": "assets/derived/avatar-4/mouth-E.png",
+      "anchor": {
+        "x": 131,
+        "y": 195
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/yuz-animasyon-sprite-atlasi-4.png",
+      "derivationNote": "türetilecek: hizalanmış poz mevcut değil; nötr yama kullanılır. Sabit nötr kaynaktan kayıpsız kırpım [139, 207, 100, 45]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "mouth-I",
+      "pngPath": "assets/derived/avatar-4/mouth-I.png",
+      "anchor": {
+        "x": 131,
+        "y": 195
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/yuz-animasyon-sprite-atlasi-4.png",
+      "derivationNote": "türetilecek: hizalanmış poz mevcut değil; nötr yama kullanılır. Sabit nötr kaynaktan kayıpsız kırpım [139, 207, 100, 45]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "mouth-O",
+      "pngPath": "assets/derived/avatar-4/mouth-O.png",
+      "anchor": {
+        "x": 131,
+        "y": 195
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/yuz-animasyon-sprite-atlasi-4.png",
+      "derivationNote": "türetilecek: hizalanmış poz mevcut değil; nötr yama kullanılır. Sabit nötr kaynaktan kayıpsız kırpım [139, 207, 100, 45]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "mouth-U",
+      "pngPath": "assets/derived/avatar-4/mouth-U.png",
+      "anchor": {
+        "x": 131,
+        "y": 195
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/yuz-animasyon-sprite-atlasi-4.png",
+      "derivationNote": "türetilecek: hizalanmış poz mevcut değil; nötr yama kullanılır. Sabit nötr kaynaktan kayıpsız kırpım [139, 207, 100, 45]; yeniden ölçekleme yok."
+    },
+    {
+      "name": "mouth-consonant",
+      "pngPath": "assets/derived/avatar-4/mouth-consonant.png",
+      "anchor": {
+        "x": 131,
+        "y": 195
+      },
+      "scale": 1,
+      "sourceFile": "assets/owner/yuz-animasyon-sprite-atlasi-4.png",
+      "derivationNote": "türetilecek: hizalanmış poz mevcut değil; nötr yama kullanılır. Sabit nötr kaynaktan kayıpsız kırpım [139, 207, 100, 45]; yeniden ölçekleme yok."
+    }
+  ]
+}
