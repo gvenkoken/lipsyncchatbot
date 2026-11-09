@@ -1,7 +1,13 @@
 import { loadConfig as defaultLoadConfig } from '../config/config-loader.js';
-import { selectVoice as defaultSelectVoice } from '../voice/voice-selector.js';
+import { selectVoice as defaultSelectVoice, voiceId } from '../voice/voice-selector.js';
 import { splitSentences } from '../speech/split.js';
-import { buildTimeline as defaultBuildTimeline, resyncAt as defaultResyncAt, sampleAt } from '../lipsync/index.js';
+import { prepareSpeechText } from '../speech/text.js';
+import { buildTimeline as defaultBuildTimeline, resyncAt as defaultResyncAt, sampleAt, VISEME_TARGETS } from '../lipsync/index.js';
+
+/** The mouth shape leads the sound slightly: smoothing needs a few frames to reach it. */
+export const MOUTH_LEAD_MS = 40;
+/** Voice speed relative to the lipsync estimate is learnt within these limits. */
+export const PACE_LIMITS = Object.freeze({ min: 0.6, max: 1.8 });
 
 const defaultClock = {
   now: () => performance.now(),
@@ -12,6 +18,9 @@ const defaultClock = {
 /** SpeechPort end means the entire parts queue has ended. The port suppresses
  * cancelled native events; detached callbacks are also guarded by session id.
  * open() resolves when config is loaded and the greeting timer is scheduled.
+ * When the port reports parts, each sentence gets its own timeline from its real
+ * start, the mouth rests between sentences, and the voice's measured speed
+ * (pace) is kept per voice so the next sentences match it better.
  */
 export class Conversation {
   constructor({ speech, animator, liveliness, clock = defaultClock,
@@ -26,6 +35,8 @@ export class Conversation {
     this.pitch = 1;
     this.rateChanged = false;
     this.pitchChanged = false;
+    this.voicePreference = '';
+    this.paces = new Map();
     this.config = { speech: { lang: 'tr-TR' } };
     this.listeners = new Map();
     this.cleanups = [];
@@ -57,7 +68,8 @@ export class Conversation {
     this.clearWork();
     this.speech.cancel();
     this.animator.closeMouth();
-    this.session = { id: this.sessionId, text, parts: splitSentences(text), status: 'Waiting' };
+    const spoken = prepareSpeechText(text);
+    this.session = { id: this.sessionId, text: spoken, parts: splitSentences(spoken), status: 'Waiting' };
     this.state = state;
     return this.session;
   }
@@ -73,7 +85,7 @@ export class Conversation {
       this.config = config;
       if (!this.rateChanged) this.rate = config.speech.rate;
       if (!this.pitchChanged) this.pitch = config.speech.pitch;
-      session.text = config.greeting.text;
+      session.text = prepareSpeechText(config.greeting.text);
       session.parts = splitSentences(session.text);
       this.timer = this.clock.setTimeout(() => {
         this.timer = null;
@@ -92,7 +104,7 @@ export class Conversation {
 
   say(text) {
     if (typeof text !== 'string') throw new TypeError('text must be a string');
-    if (!text.trim()) return;
+    if (!prepareSpeechText(text)) return;
     const session = this.replace(text, 'Waiting');
     this.animator.start();
     this.liveliness?.start();
@@ -100,11 +112,24 @@ export class Conversation {
   }
 
   speak(session) {
-    const { voice, missingVoice } = this.selectVoice(this.speech);
+    const { voice, missingVoice } = this.selectVoice(this.speech, { preferred: this.voicePreference });
     if (missingVoice) this.emit('voice-warning', { message: missingVoice });
     const rate = this.rate;
-    let timeline;
-    let origin;
+    const paceKey = `${voiceId(voice)}|${rate}`;
+    let timeline = null;
+    let origin = 0;
+    let offset = 0;
+    let part = null;
+    const begin = (text, charIndex) => {
+      timeline = this.buildTimeline(text, rate * (this.paces.get(paceKey) ?? 1));
+      origin = this.clock.now();
+      offset = charIndex;
+    };
+    const update = () => {
+      if (!this.current(session)) return;
+      const target = timeline ? sampleAt(timeline, this.clock.now() - origin + MOUTH_LEAD_MS) : VISEME_TARGETS.closed;
+      this.animator.setMouthTarget({ open: target.openness, width: target.width, round: target.roundness });
+    };
     const listen = (type, callback) => this.cleanups.push(this.speech.on(type, event => {
       if (this.current(session, event)) callback(event);
     }));
@@ -112,18 +137,26 @@ export class Conversation {
       if (session.status === 'Speaking') return;
       session.status = 'Speaking';
       this.state = 'Speaking';
-      timeline = this.buildTimeline(session.text, rate);
-      origin = this.clock.now();
-      const update = () => {
-        if (!this.current(session)) return;
-        const target = sampleAt(timeline, this.clock.now() - origin);
-        this.animator.setMouthTarget({ open: target.openness, width: target.width, round: target.roundness });
-      };
+      // The whole text is the estimate for ports that do not report parts.
+      begin(session.text, 0);
       this.cleanups.push(this.animator.subscribe(update));
       update();
     });
+    listen('part', event => {
+      begin(session.text.slice(event.charIndex, event.charIndex + event.length), event.charIndex);
+      part = { timeline, startedAt: origin };
+      update();
+    });
+    listen('part-end', () => {
+      if (part) this.learnPace(paceKey, part.timeline.estimateMs, this.clock.now() - part.startedAt);
+      part = null;
+      timeline = null;
+      update();
+    });
     listen('boundary', event => {
-      if (timeline) this.resyncAt(timeline, event.charIndex, this.clock.now() - origin);
+      if (!timeline) return;
+      this.resyncAt(timeline, event.charIndex - offset, this.clock.now() - origin);
+      update();
     });
     listen('end', () => this.finish(session));
     listen('error', event => this.finish(session, event.error));
@@ -135,6 +168,21 @@ export class Conversation {
     } catch (error) {
       if (this.current(session)) this.finish(session, error);
     }
+  }
+
+  /** Compare a sentence's estimated and real length; very short ones say little about speed. */
+  learnPace(key, estimateMs, measuredMs) {
+    if (!(estimateMs >= 400) || !(measuredMs >= 300)) return;
+    const pace = this.paces.get(key) ?? 1;
+    const observed = pace * estimateMs / measuredMs;
+    const next = (pace + observed) / 2;
+    this.paces.set(key, Math.min(PACE_LIMITS.max, Math.max(PACE_LIMITS.min, next)));
+  }
+
+  /** '' selects the best Turkish voice; applies from the next speech, not saved. */
+  setVoice(id) {
+    if (typeof id !== 'string') throw new TypeError('voice id must be a string');
+    this.voicePreference = id;
   }
 
   finish(session, error) {

@@ -1,5 +1,15 @@
 const pair = value => ({ current: value, target: value });
 
+/** Each channel covers this share of the remaining distance per 16 ms frame. */
+export const SMOOTHING = 0.35;
+const FRAME_MS = 16;
+
+/** The same motion per millisecond at 60, 120 or 144 Hz; long gaps are capped. */
+export function smoothingFor(elapsedMs) {
+  if (!Number.isFinite(elapsedMs) || elapsedMs <= 0) return SMOOTHING;
+  return 1 - Math.pow(1 - SMOOTHING, Math.min(elapsedMs, 100) / FRAME_MS);
+}
+
 /** Each scalar keeps its rendered value and its independently set target. */
 export class FaceState {
   constructor() {
@@ -28,13 +38,16 @@ export class FaceAnimator {
     this.listeners = new Set();
     this.running = false;
     this.frameId = null;
-    this.tick = () => {
+    this.lastFrame = null;
+    this.tick = timestamp => {
       this.frameId = null;
       if (!this.running) return;
       // Queue first so subscriber calls to start() cannot create another loop.
       this.frameId = this.clock.requestAnimationFrame(this.tick);
+      const step = this.lastFrame === null || !Number.isFinite(timestamp) ? SMOOTHING : smoothingFor(timestamp - this.lastFrame);
+      if (Number.isFinite(timestamp)) this.lastFrame = timestamp;
       for (const channel of channels(this.state)) {
-        channel.current += (channel.target - channel.current) * 0.35;
+        channel.current += (channel.target - channel.current) * step;
       }
       for (const listener of [...this.listeners]) listener(this.state);
     };
@@ -48,6 +61,7 @@ export class FaceAnimator {
 
   stop() {
     this.running = false;
+    this.lastFrame = null;
     if (this.frameId !== null) this.clock.cancelAnimationFrame(this.frameId);
     this.frameId = null;
   }

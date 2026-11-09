@@ -47,12 +47,19 @@ export class BrowserSpeech extends SpeechPort {
       this.activeUtterance = utterance;
       Object.assign(utterance, { rate, pitch, lang });
       if (voice !== undefined) utterance.voice = voice;
+      const partOffset = offset;
       let finished = false;
+      let partStarted = false;
       const current = () => generation === this.generation && !finished;
       utterance.onstart = () => {
-        if (!current() || started) return;
-        started = true;
-        this.emit('start');
+        if (!current() || partStarted) return;
+        partStarted = true;
+        if (!started) {
+          started = true;
+          this.emit('start');
+        }
+        // Each sentence's real start lets the mouth resync even without boundary events.
+        this.emit('part', { index, charIndex: partOffset, length: queue[index].length });
       };
       if (this.supportsBoundary) utterance.onboundary = event => {
         if (current()) this.emit('boundary', {
@@ -64,6 +71,7 @@ export class BrowserSpeech extends SpeechPort {
         if (!current()) return;
         finished = true;
         offset += queue[index].length;
+        if (partStarted) this.emit('part-end', { index });
         read(index + 1);
       };
       utterance.onerror = event => {

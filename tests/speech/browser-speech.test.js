@@ -86,3 +86,22 @@ test('engine failure terminates the queue and empty text does not speak', () => 
   assert.deepEqual(errors, ['synthesis-failed']);
   assert.equal(spoken.length, 1);
 });
+
+test('each part reports its start and end with its place in the whole text', () => {
+  const { port, spoken } = engine(false);
+  const events = [];
+  for (const type of ['start', 'part', 'part-end', 'end']) port.on(type, event => events.push(event));
+  port.speak(['Bir. ', 'İki? ', 'Üç!']);
+  for (let i = 0; i < 3; i += 1) {
+    spoken[i].onstart();
+    spoken[i].onstart(); // Some engines repeat start; it is reported once.
+    spoken[i].onend();
+  }
+  assert.deepEqual(events.map(({ type, index, charIndex, length }) => [type, index, charIndex, length]), [
+    ['start', undefined, undefined, undefined],
+    ['part', 0, 0, 5], ['part-end', 0, undefined, undefined],
+    ['part', 1, 5, 5], ['part-end', 1, undefined, undefined],
+    ['part', 2, 10, 3], ['part-end', 2, undefined, undefined],
+    ['end', undefined, undefined, undefined]
+  ]);
+});

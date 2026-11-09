@@ -119,3 +119,21 @@ test('AC15.5: changed fetched coordinates update the SVG when the panel reopens'
     assert.notEqual(eye.y, previous.eyes[index].y);
   });
 });
+
+test('the voice list offers the Turkish voices best first and the choice reaches SpeechPort', async t => {
+  const env = await setup(t); await env.open();
+  const select = env.widget.voice.select;
+  assert.deepEqual(select.children.map(option => option.textContent), ['Otomatik (en doğal Türkçe ses)']);
+  const yelda = { name: 'Yelda', lang: 'tr-TR', localService: true, voiceURI: 'yelda' };
+  const google = { name: 'Google Türkçe', lang: 'tr-TR', localService: false, voiceURI: 'google' };
+  env.speech.setVoices([{ name: 'Samantha', lang: 'en-US', voiceURI: 'sam' }, yelda, google]);
+  assert.deepEqual(select.children.map(option => option.textContent), ['Otomatik (en doğal Türkçe ses)', 'Google Türkçe · çevrim içi', 'Yelda']);
+  env.say('Merhaba.');
+  assert.equal(env.speech.calls.at(-1).options.voice, google);
+  select.value = 'yelda'; select.dispatch('change');
+  env.say('Tekrar merhaba.');
+  assert.equal(env.speech.calls.at(-1).options.voice, yelda);
+  // A chosen voice that disappears falls back to automatic.
+  env.speech.setVoices([google]);
+  assert.equal(select.value, '');
+});

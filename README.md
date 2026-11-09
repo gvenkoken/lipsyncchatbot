@@ -7,9 +7,10 @@ Depo kökünde `npm start` çalıştırın ve http://localhost:8080 adresini aç
 Sunucu yalnızca `web/` klasörünü sunar. Durdurmak için Ctrl+C kullanın.
 `file://` ile açmak desteklenmez; ES modülleri HTTP üzerinden yüklenmelidir.
 
-`npm test`, `node:test` ile `tests/` altındaki testleri bir kez çalıştırır.
-Komut `node --test tests/*.test.js` kullanır; böylece dizin girişini
-çözemeyen Node.js sürümlerinde de test dosyaları doğrudan bulunur.
+`npm test`, `node:test` ile `tests/` altındaki ve alt klasörlerindeki bütün
+testleri bir kez çalıştırır, ardından uçtan uca (`*.e2e.test.js`) testleri
+çalıştırır. Dosyaları `scripts/run-tests.mjs` listeler; böylece Node.js'in
+sürüme göre değişen dizin ve glob davranışına bağlı kalınmaz.
 Harici paket veya internet bağlantısı gerekmez. Smoke testi yerel, rastgele
 bir port kullanır ve sunucuyu test sonunda kapatır.
 
@@ -17,6 +18,23 @@ bir port kullanır ve sunucuyu test sonunda kapatır.
 Boş veya bilinmeyen hash, karakter testini gösterir. Görsel ekranlar ve
 tasarım sistemi sonraki görevlerde eklenecektir.
 `tests/helpers/` sahte DOM, Clock ve Random yardımcılarını içerir.
+
+## Ses kalitesi
+
+Seslendirme tarayıcının kendi Türkçe seslerini kullanır; kalite büyük ölçüde
+hangi sesin kurulu olduğuna bağlıdır. Otomatik seçim en doğal sesi seçer:
+önce Edge'in "Online (Natural)" sinir ağı sesleri, sonra Apple'ın indirilen
+Premium/Enhanced sesleri, sonra Chrome'un "Google Türkçe" sesi, en son temel
+sistem sesi. Panelin "Ses" listesinden başka bir Türkçe ses seçilebilir.
+
+macOS'ta daha doğal bir ses için: Sistem Ayarları → Erişilebilirlik →
+Seslendirilen İçerik → Sistem sesi → Sesleri Yönet → Türkçe → Yelda
+(Gelişmiş/Premium) indirin, ardından tarayıcıyı yeniden başlatın.
+
+Ağız hareketi her cümlenin gerçek başlangıcında yeniden hizalanır, kelime
+olayları geldiğinde kelime başına düzeltilir ve sesin ölçülen hızı sonraki
+cümlelere uygulanır. Metindeki emoji ve markdown işaretleri okunmaz; satır
+sonları cümle sonu gibi okunur.
 
 ## Ideafactra canlı önizlemesi ve Docker Compose
 

@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test tests/*.test.js",
-    "posttest": "node --test tests/e2e/*.e2e.test.js",
+    "test": "node scripts/run-tests.mjs",
+    "posttest": "node scripts/run-tests.mjs e2e",
     "start": "node scripts/serve.mjs"
   }
 }

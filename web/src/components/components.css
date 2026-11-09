@@ -1,12 +1,12 @@
 /* Load this stylesheet alongside applyTheme(document); no build step is needed. */
-.button,.dismiss,.field input,.field textarea{box-sizing:border-box;font:inherit;min-width:44px;min-height:44px}
+.button,.dismiss,.field input,.field textarea,.field select{box-sizing:border-box;font:inherit;min-width:44px;min-height:44px}
 .button{display:inline-flex;align-items:center;justify-content:center;gap:var(--lypsync-space-sm);padding:var(--lypsync-space-md) var(--lypsync-space-lg);border:1px solid transparent;border-radius:var(--lypsync-radius-md);background:var(--lypsync-color-primary);color:var(--lypsync-color-surface);font-family:var(--lypsync-text-label-family);font-size:var(--lypsync-text-label-size);line-height:var(--lypsync-text-label-line);font-weight:var(--lypsync-text-label-weight);cursor:pointer}
 .button:hover{background:var(--lypsync-color-secondary)}
 .button-secondary,.button-icon{background:var(--lypsync-color-surface);color:var(--lypsync-color-text);border-color:var(--lypsync-color-border)}
 .button-secondary:hover,.button-icon:hover{background:var(--lypsync-color-background)}
 .button-icon{width:44px;height:44px;padding:var(--lypsync-space-sm)}
 .button:disabled{background:var(--lypsync-color-border);color:var(--lypsync-color-muted);cursor:default}
-.button:focus-visible,.dismiss:focus-visible,.field input:focus-visible,.field textarea:focus-visible{outline:2px solid var(--lypsync-color-primary);outline-offset:3px;box-shadow:var(--lypsync-shadow-focus)}
+.button:focus-visible,.dismiss:focus-visible,.field input:focus-visible,.field textarea:focus-visible,.field select:focus-visible{outline:2px solid var(--lypsync-color-primary);outline-offset:3px;box-shadow:var(--lypsync-shadow-focus)}
 [hidden]{display:none!important}
 .launcher{position:fixed;right:var(--lypsync-space-xxl);bottom:var(--lypsync-space-xl);z-index:30;width:60px;height:60px;border-color:var(--lypsync-color-secondary);border-radius:var(--lypsync-radius-pill);background:var(--lypsync-color-primary);color:var(--lypsync-color-surface);box-shadow:var(--lypsync-shadow-panel)}
 .launcher:hover{background:var(--lypsync-color-secondary)}
@@ -26,6 +26,7 @@
 .field{display:flex;flex-direction:column;gap:var(--lypsync-space-sm);min-width:0}
 .field label{font-size:var(--lypsync-text-label-size);line-height:var(--lypsync-text-label-line);font-weight:var(--lypsync-text-label-weight)}
 .field p{margin:0}.field textarea{width:100%;min-height:112px;resize:vertical;border:1px solid var(--lypsync-color-border);border-radius:var(--lypsync-radius-sm);padding:var(--lypsync-space-md);color:var(--lypsync-color-text);background:var(--lypsync-color-surface)}
+.field select{width:100%;border:1px solid var(--lypsync-color-border);border-radius:var(--lypsync-radius-sm);padding:0 var(--lypsync-space-md);color:var(--lypsync-color-text);background:var(--lypsync-color-surface)}
 .field input[type=range]{width:100%;margin:0;accent-color:var(--lypsync-color-primary);cursor:pointer}
 .range-heading{display:flex;align-items:center;justify-content:space-between;gap:var(--lypsync-space-sm)}
 .value{font-size:var(--lypsync-text-label-size);font-weight:var(--lypsync-text-label-weight);color:var(--lypsync-color-primary);font-variant-numeric:tabular-nums;background:var(--lypsync-color-accent);padding:var(--lypsync-space-xs) var(--lypsync-space-sm);border-radius:var(--lypsync-radius-sm)}

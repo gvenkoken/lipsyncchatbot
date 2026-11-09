@@ -1,5 +1,7 @@
 /** on(type, listener) returns an unsubscribe function. Boundary charIndex is
- * relative to parts.join(''). Cancellation silently replaces the session. */
+ * relative to parts.join(''). Cancellation silently replaces the session.
+ * Events: start (once), part { index, charIndex, length } and part-end { index }
+ * around each part when the engine reports them, boundary, end, error. */
 export class SpeechPort {
   constructor() { this.listeners = new Map(); this.supportsBoundary = false; }
   on(type, listener) {

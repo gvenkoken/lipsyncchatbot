@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { FaceAnimator, FaceState } from '../../web/src/animation/index.js';
+import { FaceAnimator, FaceState, smoothingFor } from '../../web/src/animation/index.js';
 import { FakeClock } from '../helpers/clock.js';
 
 const scalars = state => [
@@ -24,7 +24,7 @@ test('every FaceState channel advances by 0.35 without overshooting', () => {
     assert.equal(channel.current, starts[index] + (channel.target - starts[index]) * 0.35);
   });
   clock.advance(16);
-  assert.equal(animator.state.mouth.open.current, 0.5775);
+  assert.ok(Math.abs(animator.state.mouth.open.current - 0.5775) < 1e-12);
   for (let frame = 0; frame < 100; frame++) {
     const previous = scalars(animator.state).map(channel => channel.current);
     clock.advance(16);
@@ -77,4 +77,27 @@ test('partial targets preserve other channels and invalid updates are atomic', (
   assert.throws(() => animator.setTargets({ breath: 1, eyelid: NaN }), TypeError);
   assert.equal(animator.state.breath.target, 0);
   assert.throws(() => animator.setMouthTarget({ unknown: 1 }), TypeError);
+});
+
+test('smoothing follows elapsed time, so 120 Hz screens do not move the mouth twice as fast', () => {
+  assert.equal(smoothingFor(16), 0.35);
+  // Two 8 ms frames cover the same distance as one 16 ms frame.
+  const half = smoothingFor(8);
+  assert.ok(Math.abs((1 - (1 - half) ** 2) - 0.35) < 1e-12);
+  assert.ok(smoothingFor(1000) < 1);
+  for (const elapsed of [0, -5, NaN]) assert.equal(smoothingFor(elapsed), 0.35);
+  const clock = new FakeClock();
+  const fast = new FaceAnimator({ clock });
+  fast.setMouthTarget({ open: 1 });
+  fast.start();
+  for (let frame = 0; frame < 5; frame++) clock.advance(8);
+  const slowClock = new FakeClock();
+  const slow = new FaceAnimator({ clock: slowClock });
+  slow.setMouthTarget({ open: 1 });
+  slow.start();
+  slowClock.advance(8);
+  for (let frame = 0; frame < 2; frame++) slowClock.advance(16);
+  // Both ran 32 ms after their first frame.
+  assert.ok(Math.abs(fast.state.mouth.open.current - slow.state.mouth.open.current) < 1e-12);
+  fast.stop(); slow.stop();
 });

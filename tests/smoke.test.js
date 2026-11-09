@@ -73,7 +73,8 @@ test('static GET routes, module entry and traversal rejection', async t => {
 
 test('package has exact commands and no dependencies', async () => {
   const pkg = JSON.parse(await readFile(resolve(process.cwd(), 'package.json'), 'utf8'));
-  assert.equal(pkg.scripts.test, 'node --test tests/*.test.js');
+  assert.equal(pkg.scripts.test, 'node scripts/run-tests.mjs');
+  assert.equal(pkg.scripts.posttest, 'node scripts/run-tests.mjs e2e');
   assert.equal(pkg.scripts.start, 'node scripts/serve.mjs');
   assert.equal(pkg.dependencies, undefined);
   assert.equal(pkg.devDependencies, undefined);

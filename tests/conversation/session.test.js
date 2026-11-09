@@ -77,7 +77,9 @@ test('fallback warns; late Turkish voice is selected on the next speech', () => 
   const warnings = [];
   c.on('voice-warning', event => warnings.push(event.message));
   c.say('Merhaba.');
-  assert.equal(speech.calls[0].options.voice, fallback);
+  // No foreign voice is forced; the browser picks one for lang tr-TR.
+  assert.equal(speech.calls[0].options.voice, undefined);
+  assert.equal(speech.calls[0].options.lang, 'tr-TR');
   assert.deepEqual(warnings, ['Türkçe ses bulunamadı, varsayılan ses kullanılıyor.']);
   const turkish = { lang: 'tr-TR' };
   speech.setVoices([turkish]);
