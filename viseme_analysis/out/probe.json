@@ -1,0 +1,17 @@
+{
+  "file": "reference.mp4",
+  "width": 1080,
+  "height": 1080,
+  "fps": 25.0,
+  "frames": 4119,
+  "duration_s": 164.76,
+  "video_codec": "h264 (High)",
+  "pix_fmt": "yuv420p",
+  "video_bitrate_kbps": 1636,
+  "total_bitrate_kbps": 1831,
+  "audio_codec": "aac (LC)",
+  "audio_sample_rate": 48000,
+  "audio_channels": 2,
+  "audio_bitrate_kbps": 189,
+  "bits_per_pixel": 0.0561
+}

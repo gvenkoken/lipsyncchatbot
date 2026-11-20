@@ -1,0 +1,1312 @@
+{
+ "voice": "ash",
+ "model": "gpt-4o-mini-tts",
+ "sample_rate": 24000,
+ "items": [
+  {
+   "id": "s00",
+   "text": "Merhaba, size nasıl yardımcı olabilirim?",
+   "wav": "s00.wav",
+   "duration": 3.25,
+   "words": [
+    {
+     "word": "Merhaba,",
+     "start": 0.0,
+     "end": 0.9
+    },
+    {
+     "word": "size",
+     "start": 1.36,
+     "end": 1.5
+    },
+    {
+     "word": "nasıl",
+     "start": 1.5,
+     "end": 1.96
+    },
+    {
+     "word": "yardımcı",
+     "start": 1.96,
+     "end": 2.52
+    },
+    {
+     "word": "olabilirim?",
+     "start": 2.52,
+     "end": 3.0
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s01",
+   "text": "Tabii, hemen bakıyorum.",
+   "wav": "s01.wav",
+   "duration": 2.8,
+   "words": [
+    {
+     "word": "Tabii,",
+     "start": 0.0,
+     "end": 0.6
+    },
+    {
+     "word": "hemen",
+     "start": 0.9,
+     "end": 1.1
+    },
+    {
+     "word": "bakıyorum.",
+     "start": 1.1,
+     "end": 1.62
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s02",
+   "text": "Bugün hava çok güzel, dışarıda yürüyüş yapmak için harika bir gün.",
+   "wav": "s02.wav",
+   "duration": 5.75,
+   "words": [
+    {
+     "word": "Bugün",
+     "start": 0.0,
+     "end": 0.62
+    },
+    {
+     "word": "hava",
+     "start": 0.62,
+     "end": 1.04
+    },
+    {
+     "word": "çok",
+     "start": 1.04,
+     "end": 1.34
+    },
+    {
+     "word": "güzel,",
+     "start": 1.34,
+     "end": 2.06
+    },
+    {
+     "word": "dışarıda",
+     "start": 2.7,
+     "end": 3.18
+    },
+    {
+     "word": "yürüyüş",
+     "start": 3.18,
+     "end": 3.68
+    },
+    {
+     "word": "yapmak",
+     "start": 3.68,
+     "end": 4.06
+    },
+    {
+     "word": "için",
+     "start": 4.06,
+     "end": 4.62
+    },
+    {
+     "word": "harika",
+     "start": 4.62,
+     "end": 5.2
+    },
+    {
+     "word": "bir",
+     "start": 5.2,
+     "end": 5.4
+    },
+    {
+     "word": "gün.",
+     "start": 5.4,
+     "end": 5.52
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s03",
+   "text": "Siparişiniz yarın öğleden sonra teslim edilecek.",
+   "wav": "s03.wav",
+   "duration": 4.15,
+   "words": [
+    {
+     "word": "Siparişiniz",
+     "start": 0.0,
+     "end": 1.0
+    },
+    {
+     "word": "yarın",
+     "start": 1.0,
+     "end": 1.54
+    },
+    {
+     "word": "öğleden",
+     "start": 1.54,
+     "end": 2.18
+    },
+    {
+     "word": "sonra",
+     "start": 2.18,
+     "end": 2.58
+    },
+    {
+     "word": "teslim",
+     "start": 2.58,
+     "end": 3.18
+    },
+    {
+     "word": "edilecek.",
+     "start": 3.18,
+     "end": 3.66
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s04",
+   "text": "Bunu biraz daha açabilir misiniz?",
+   "wav": "s04.wav",
+   "duration": 3.5,
+   "words": [
+    {
+     "word": "Bunu",
+     "start": 0.0,
+     "end": 0.42
+    },
+    {
+     "word": "biraz",
+     "start": 0.42,
+     "end": 0.86
+    },
+    {
+     "word": "daha",
+     "start": 0.86,
+     "end": 1.18
+    },
+    {
+     "word": "açabilir",
+     "start": 1.18,
+     "end": 1.76
+    },
+    {
+     "word": "misiniz?",
+     "start": 1.76,
+     "end": 2.26
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s05",
+   "text": "Anladım, o zaman önce hesabınızı kontrol edelim.",
+   "wav": "s05.wav",
+   "duration": 4.4,
+   "words": [
+    {
+     "word": "Anladım,",
+     "start": 0.0,
+     "end": 0.64
+    },
+    {
+     "word": "o",
+     "start": 1.28,
+     "end": 1.38
+    },
+    {
+     "word": "zaman",
+     "start": 1.38,
+     "end": 1.72
+    },
+    {
+     "word": "önce",
+     "start": 1.72,
+     "end": 2.18
+    },
+    {
+     "word": "hesabınızı",
+     "start": 2.18,
+     "end": 3.36
+    },
+    {
+     "word": "kontrol",
+     "start": 3.36,
+     "end": 3.7
+    },
+    {
+     "word": "edelim.",
+     "start": 3.7,
+     "end": 4.04
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s06",
+   "text": "Maalesef bu özellik şu anda kullanılamıyor, ama yakında eklenecek.",
+   "wav": "s06.wav",
+   "duration": 6.5,
+   "words": [
+    {
+     "word": "Maalesef",
+     "start": 0.0,
+     "end": 1.2
+    },
+    {
+     "word": "bu",
+     "start": 1.2,
+     "end": 1.38
+    },
+    {
+     "word": "özellik",
+     "start": 1.38,
+     "end": 2.02
+    },
+    {
+     "word": "şu",
+     "start": 2.02,
+     "end": 2.24
+    },
+    {
+     "word": "anda",
+     "start": 2.24,
+     "end": 2.52
+    },
+    {
+     "word": "kullanılamıyor,",
+     "start": 2.52,
+     "end": 3.74
+    },
+    {
+     "word": "ama",
+     "start": 4.14,
+     "end": 4.58
+    },
+    {
+     "word": "yakında",
+     "start": 4.58,
+     "end": 5.18
+    },
+    {
+     "word": "eklenecek.",
+     "start": 5.18,
+     "end": 5.92
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s07",
+   "text": "Evet, doğru söylüyorsunuz.",
+   "wav": "s07.wav",
+   "duration": 2.95,
+   "words": [
+    {
+     "word": "Evet,",
+     "start": 0.0,
+     "end": 0.8
+    },
+    {
+     "word": "doğru",
+     "start": 1.46,
+     "end": 1.68
+    },
+    {
+     "word": "söylüyorsunuz.",
+     "start": 1.68,
+     "end": 2.6
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s08",
+   "text": "Toplantı saat üçte başlıyor, isterseniz size hatırlatma kurabilirim.",
+   "wav": "s08.wav",
+   "duration": 5.5,
+   "words": [
+    {
+     "word": "Toplantı",
+     "start": 0.0,
+     "end": 0.9
+    },
+    {
+     "word": "saat",
+     "start": 0.9,
+     "end": 1.22
+    },
+    {
+     "word": "üçte",
+     "start": 1.22,
+     "end": 1.7
+    },
+    {
+     "word": "başlıyor,",
+     "start": 1.7,
+     "end": 2.54
+    },
+    {
+     "word": "isterseniz",
+     "start": 2.98,
+     "end": 3.5
+    },
+    {
+     "word": "size",
+     "start": 3.5,
+     "end": 3.82
+    },
+    {
+     "word": "hatırlatma",
+     "start": 3.82,
+     "end": 4.42
+    },
+    {
+     "word": "kurabilirim.",
+     "start": 4.42,
+     "end": 5.12
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s09",
+   "text": "Bir saniye, bilgileri getiriyorum.",
+   "wav": "s09.wav",
+   "duration": 3.05,
+   "words": [
+    {
+     "word": "Bir",
+     "start": 0.0,
+     "end": 0.5
+    },
+    {
+     "word": "saniye,",
+     "start": 0.5,
+     "end": 1.46
+    },
+    {
+     "word": "bilgileri",
+     "start": 1.68,
+     "end": 2.06
+    },
+    {
+     "word": "getiriyorum.",
+     "start": 2.06,
+     "end": 2.78
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s10",
+   "text": "Şifrenizi sıfırlamak için size bir bağlantı gönderdim.",
+   "wav": "s10.wav",
+   "duration": 5.4,
+   "words": [
+    {
+     "word": "Şifrenizi",
+     "start": 0.0,
+     "end": 1.4
+    },
+    {
+     "word": "sıfırlamak",
+     "start": 1.4,
+     "end": 2.12
+    },
+    {
+     "word": "için",
+     "start": 2.12,
+     "end": 2.78
+    },
+    {
+     "word": "size",
+     "start": 2.78,
+     "end": 3.22
+    },
+    {
+     "word": "bir",
+     "start": 3.22,
+     "end": 3.56
+    },
+    {
+     "word": "bağlantı",
+     "start": 3.56,
+     "end": 4.08
+    },
+    {
+     "word": "gönderdim.",
+     "start": 4.08,
+     "end": 4.72
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s11",
+   "text": "Çok teşekkür ederim, iyi günler dilerim!",
+   "wav": "s11.wav",
+   "duration": 4.85,
+   "words": [
+    {
+     "word": "Çok",
+     "start": 0.0,
+     "end": 1.16
+    },
+    {
+     "word": "teşekkür",
+     "start": 1.16,
+     "end": 1.86
+    },
+    {
+     "word": "ederim,",
+     "start": 1.86,
+     "end": 2.42
+    },
+    {
+     "word": "iyi",
+     "start": 3.28,
+     "end": 3.42
+    },
+    {
+     "word": "günler",
+     "start": 3.42,
+     "end": 3.94
+    },
+    {
+     "word": "dilerim!",
+     "start": 3.94,
+     "end": 4.46
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s12",
+   "text": "Bu konuda üç farklı seçeneğiniz var: aylık, yıllık veya kurumsal paket.",
+   "wav": "s12.wav",
+   "duration": 6.95,
+   "words": [
+    {
+     "word": "Bu",
+     "start": 0.0,
+     "end": 0.36
+    },
+    {
+     "word": "konuda",
+     "start": 0.36,
+     "end": 1.06
+    },
+    {
+     "word": "üç",
+     "start": 1.06,
+     "end": 1.48
+    },
+    {
+     "word": "farklı",
+     "start": 1.48,
+     "end": 1.92
+    },
+    {
+     "word": "seçeneğiniz",
+     "start": 1.92,
+     "end": 2.62
+    },
+    {
+     "word": "var,",
+     "start": 2.62,
+     "end": 3.06
+    },
+    {
+     "word": "aylık,",
+     "start": 3.6,
+     "end": 4.18
+    },
+    {
+     "word": "yıllık",
+     "start": 4.42,
+     "end": 5.1
+    },
+    {
+     "word": "veya",
+     "start": 5.1,
+     "end": 5.52
+    },
+    {
+     "word": "kurumsal",
+     "start": 5.52,
+     "end": 6.18
+    },
+    {
+     "word": "paket.",
+     "start": 6.18,
+     "end": 6.56
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s13",
+   "text": "Hayır, ek bir ücret ödemeniz gerekmiyor.",
+   "wav": "s13.wav",
+   "duration": 3.55,
+   "words": [
+    {
+     "word": "Hayır,",
+     "start": 0.0,
+     "end": 0.6
+    },
+    {
+     "word": "ek",
+     "start": 1.02,
+     "end": 1.26
+    },
+    {
+     "word": "bir",
+     "start": 1.26,
+     "end": 1.48
+    },
+    {
+     "word": "ücret",
+     "start": 1.48,
+     "end": 1.9
+    },
+    {
+     "word": "ödemeniz",
+     "start": 1.9,
+     "end": 2.52
+    },
+    {
+     "word": "gerekmiyor.",
+     "start": 2.52,
+     "end": 3.12
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s14",
+   "text": "Pembe bir bulut, mavi gökyüzünde yavaşça süzülüyordu.",
+   "wav": "s14.wav",
+   "duration": 5.5,
+   "words": [
+    {
+     "word": "Pembe",
+     "start": 0.0,
+     "end": 1.08
+    },
+    {
+     "word": "bir",
+     "start": 1.08,
+     "end": 1.34
+    },
+    {
+     "word": "bulut,",
+     "start": 1.34,
+     "end": 2.02
+    },
+    {
+     "word": "mavi",
+     "start": 2.46,
+     "end": 2.64
+    },
+    {
+     "word": "gökyüzünde",
+     "start": 2.64,
+     "end": 3.64
+    },
+    {
+     "word": "yavaşça",
+     "start": 3.64,
+     "end": 4.4
+    },
+    {
+     "word": "süzülüyordu.",
+     "start": 4.4,
+     "end": 5.14
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s15",
+   "text": "Babam bana küçük bir bahçe kulübesi yaptı.",
+   "wav": "s15.wav",
+   "duration": 3.9,
+   "words": [
+    {
+     "word": "Babam",
+     "start": 0.0,
+     "end": 0.46
+    },
+    {
+     "word": "bana",
+     "start": 0.46,
+     "end": 1.0
+    },
+    {
+     "word": "küçük",
+     "start": 1.0,
+     "end": 1.48
+    },
+    {
+     "word": "bir",
+     "start": 1.48,
+     "end": 1.86
+    },
+    {
+     "word": "bahçe",
+     "start": 1.86,
+     "end": 2.16
+    },
+    {
+     "word": "kulübesi",
+     "start": 2.16,
+     "end": 2.7
+    },
+    {
+     "word": "yaptı.",
+     "start": 2.7,
+     "end": 3.2
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s16",
+   "text": "Fırından yeni çıkmış ekmeğin kokusu bütün sokağa yayıldı.",
+   "wav": "s16.wav",
+   "duration": 5.25,
+   "words": [
+    {
+     "word": "Fırından",
+     "start": 0.0,
+     "end": 0.78
+    },
+    {
+     "word": "yeni",
+     "start": 0.78,
+     "end": 1.2
+    },
+    {
+     "word": "çıkmış",
+     "start": 1.2,
+     "end": 1.72
+    },
+    {
+     "word": "ekmeğin",
+     "start": 1.72,
+     "end": 2.34
+    },
+    {
+     "word": "kokusu",
+     "start": 2.34,
+     "end": 3.36
+    },
+    {
+     "word": "bütün",
+     "start": 3.36,
+     "end": 3.96
+    },
+    {
+     "word": "sokağa",
+     "start": 3.96,
+     "end": 4.54
+    },
+    {
+     "word": "yayıldı.",
+     "start": 4.54,
+     "end": 4.98
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s17",
+   "text": "Şu köşedeki çiçekçi her sabah erkenden açılıyor.",
+   "wav": "s17.wav",
+   "duration": 3.9,
+   "words": [
+    {
+     "word": "Şu",
+     "start": 0.0,
+     "end": 0.3
+    },
+    {
+     "word": "köşedeki",
+     "start": 0.3,
+     "end": 0.86
+    },
+    {
+     "word": "çiçekçi",
+     "start": 0.86,
+     "end": 1.68
+    },
+    {
+     "word": "her",
+     "start": 1.68,
+     "end": 2.04
+    },
+    {
+     "word": "sabah",
+     "start": 2.04,
+     "end": 2.54
+    },
+    {
+     "word": "erkenden",
+     "start": 2.54,
+     "end": 3.1
+    },
+    {
+     "word": "açılıyor.",
+     "start": 3.1,
+     "end": 3.66
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s18",
+   "text": "İstanbul'da vapurla karşıya geçmek her zaman keyifli.",
+   "wav": "s18.wav",
+   "duration": 5.6,
+   "words": [
+    {
+     "word": "İstanbul'da",
+     "start": 0.0,
+     "end": 1.34
+    },
+    {
+     "word": "vapurla",
+     "start": 1.34,
+     "end": 2.06
+    },
+    {
+     "word": "karşıya",
+     "start": 2.06,
+     "end": 2.7
+    },
+    {
+     "word": "geçmek",
+     "start": 2.7,
+     "end": 3.44
+    },
+    {
+     "word": "her",
+     "start": 3.44,
+     "end": 3.9
+    },
+    {
+     "word": "zaman",
+     "start": 3.9,
+     "end": 4.26
+    },
+    {
+     "word": "keyifli.",
+     "start": 4.26,
+     "end": 4.94
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s19",
+   "text": "Öğrendiğime göre proje gelecek hafta tamamlanacak.",
+   "wav": "s19.wav",
+   "duration": 4.2,
+   "words": [
+    {
+     "word": "Öğrendiğime",
+     "start": 0.0,
+     "end": 0.76
+    },
+    {
+     "word": "göre",
+     "start": 0.76,
+     "end": 1.36
+    },
+    {
+     "word": "proje",
+     "start": 1.36,
+     "end": 2.08
+    },
+    {
+     "word": "gelecek",
+     "start": 2.08,
+     "end": 2.6
+    },
+    {
+     "word": "hafta",
+     "start": 2.6,
+     "end": 3.26
+    },
+    {
+     "word": "tamamlanacak.",
+     "start": 3.26,
+     "end": 4.0
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s20",
+   "text": "Peki, başka bir sorunuz var mı?",
+   "wav": "s20.wav",
+   "duration": 2.8,
+   "words": [
+    {
+     "word": "Peki,",
+     "start": 0.0,
+     "end": 0.62
+    },
+    {
+     "word": "başka",
+     "start": 1.1,
+     "end": 1.14
+    },
+    {
+     "word": "bir",
+     "start": 1.14,
+     "end": 1.4
+    },
+    {
+     "word": "sorunuz",
+     "start": 1.4,
+     "end": 1.72
+    },
+    {
+     "word": "var",
+     "start": 1.72,
+     "end": 2.04
+    },
+    {
+     "word": "mı?",
+     "start": 2.04,
+     "end": 2.2
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s21",
+   "text": "Lütfen adınızı ve e-posta adresinizi söyler misiniz?",
+   "wav": "s21.wav",
+   "duration": 5.1,
+   "words": [
+    {
+     "word": "Lütfen",
+     "start": 0.0,
+     "end": 0.82
+    },
+    {
+     "word": "adınızı",
+     "start": 0.82,
+     "end": 1.94
+    },
+    {
+     "word": "ve",
+     "start": 1.94,
+     "end": 2.2
+    },
+    {
+     "word": "e",
+     "start": 2.2,
+     "end": 2.46
+    },
+    {
+     "word": "-posta",
+     "start": 2.46,
+     "end": 2.82
+    },
+    {
+     "word": "adresinizi",
+     "start": 2.82,
+     "end": 3.52
+    },
+    {
+     "word": "söyler",
+     "start": 3.52,
+     "end": 4.0
+    },
+    {
+     "word": "misiniz?",
+     "start": 4.0,
+     "end": 4.44
+    }
+   ],
+   "exact": false
+  },
+  {
+   "id": "s22",
+   "text": "Harika! O halde başlayalım.",
+   "wav": "s22.wav",
+   "duration": 2.9,
+   "words": [
+    {
+     "word": "Harika!",
+     "start": 0.0,
+     "end": 1.04
+    },
+    {
+     "word": "O",
+     "start": 1.3,
+     "end": 1.48
+    },
+    {
+     "word": "halde",
+     "start": 1.48,
+     "end": 1.92
+    },
+    {
+     "word": "başlayalım.",
+     "start": 1.92,
+     "end": 2.54
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s23",
+   "text": "Uzun bir yolculuktan sonra nihayet eve vardık ve hemen dinlenmeye çekildik.",
+   "wav": "s23.wav",
+   "duration": 6.8,
+   "words": [
+    {
+     "word": "Uzun",
+     "start": 0.0,
+     "end": 0.94
+    },
+    {
+     "word": "bir",
+     "start": 0.94,
+     "end": 1.18
+    },
+    {
+     "word": "yolculuktan",
+     "start": 1.18,
+     "end": 1.84
+    },
+    {
+     "word": "sonra",
+     "start": 1.84,
+     "end": 2.26
+    },
+    {
+     "word": "nihayet",
+     "start": 2.26,
+     "end": 3.06
+    },
+    {
+     "word": "eve",
+     "start": 3.06,
+     "end": 3.28
+    },
+    {
+     "word": "vardık",
+     "start": 3.28,
+     "end": 3.88
+    },
+    {
+     "word": "ve",
+     "start": 3.88,
+     "end": 4.2
+    },
+    {
+     "word": "hemen",
+     "start": 4.2,
+     "end": 4.6
+    },
+    {
+     "word": "dinlenmeye",
+     "start": 4.6,
+     "end": 5.22
+    },
+    {
+     "word": "çekildik.",
+     "start": 5.22,
+     "end": 5.86
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s24",
+   "text": "Bu işlem genellikle iki ile beş dakika arasında sürüyor.",
+   "wav": "s24.wav",
+   "duration": 4.5,
+   "words": [
+    {
+     "word": "Bu",
+     "start": 0.0,
+     "end": 0.28
+    },
+    {
+     "word": "işlem",
+     "start": 0.28,
+     "end": 0.94
+    },
+    {
+     "word": "genellikle",
+     "start": 0.94,
+     "end": 1.78
+    },
+    {
+     "word": "iki",
+     "start": 1.78,
+     "end": 2.12
+    },
+    {
+     "word": "ile",
+     "start": 2.12,
+     "end": 2.38
+    },
+    {
+     "word": "beş",
+     "start": 2.38,
+     "end": 2.76
+    },
+    {
+     "word": "dakika",
+     "start": 2.76,
+     "end": 3.06
+    },
+    {
+     "word": "arasında",
+     "start": 3.06,
+     "end": 3.56
+    },
+    {
+     "word": "sürüyor.",
+     "start": 3.56,
+     "end": 4.02
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s25",
+   "text": "Özür dilerim, sizi tam olarak anlayamadım.",
+   "wav": "s25.wav",
+   "duration": 4.05,
+   "words": [
+    {
+     "word": "Özür",
+     "start": 0.0,
+     "end": 0.58
+    },
+    {
+     "word": "dilerim,",
+     "start": 0.58,
+     "end": 1.4
+    },
+    {
+     "word": "sizi",
+     "start": 1.68,
+     "end": 1.84
+    },
+    {
+     "word": "tam",
+     "start": 1.84,
+     "end": 2.16
+    },
+    {
+     "word": "olarak",
+     "start": 2.16,
+     "end": 2.76
+    },
+    {
+     "word": "anlayamadım.",
+     "start": 2.76,
+     "end": 3.64
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s26",
+   "text": "Mümkünse yarın sabah tekrar arayın, o zaman daha net bilgi verebilirim.",
+   "wav": "s26.wav",
+   "duration": 5.85,
+   "words": [
+    {
+     "word": "Mümkünse",
+     "start": 0.0,
+     "end": 0.86
+    },
+    {
+     "word": "yarın",
+     "start": 0.86,
+     "end": 1.42
+    },
+    {
+     "word": "sabah",
+     "start": 1.42,
+     "end": 1.88
+    },
+    {
+     "word": "tekrar",
+     "start": 1.88,
+     "end": 2.36
+    },
+    {
+     "word": "arayın,",
+     "start": 2.36,
+     "end": 3.14
+    },
+    {
+     "word": "o",
+     "start": 3.42,
+     "end": 3.46
+    },
+    {
+     "word": "zaman",
+     "start": 3.46,
+     "end": 3.78
+    },
+    {
+     "word": "daha",
+     "start": 3.78,
+     "end": 4.06
+    },
+    {
+     "word": "net",
+     "start": 4.06,
+     "end": 4.34
+    },
+    {
+     "word": "bilgi",
+     "start": 4.34,
+     "end": 4.68
+    },
+    {
+     "word": "verebilirim.",
+     "start": 4.68,
+     "end": 5.32
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s27",
+   "text": "Kitap okumak, müzik dinlemek ve yüzmek en sevdiğim etkinlikler.",
+   "wav": "s27.wav",
+   "duration": 6.4,
+   "words": [
+    {
+     "word": "Kitap",
+     "start": 0.0,
+     "end": 1.0
+    },
+    {
+     "word": "okumak,",
+     "start": 1.0,
+     "end": 1.8
+    },
+    {
+     "word": "müzik",
+     "start": 2.14,
+     "end": 2.32
+    },
+    {
+     "word": "dinlemek",
+     "start": 2.32,
+     "end": 3.08
+    },
+    {
+     "word": "ve",
+     "start": 3.08,
+     "end": 3.44
+    },
+    {
+     "word": "yüzmek",
+     "start": 3.44,
+     "end": 4.28
+    },
+    {
+     "word": "en",
+     "start": 4.28,
+     "end": 4.7
+    },
+    {
+     "word": "sevdiğim",
+     "start": 4.7,
+     "end": 5.2
+    },
+    {
+     "word": "etkinlikler.",
+     "start": 5.2,
+     "end": 5.94
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s28",
+   "text": "Güzel bir soru, biraz düşüneyim.",
+   "wav": "s28.wav",
+   "duration": 3.55,
+   "words": [
+    {
+     "word": "Güzel",
+     "start": 0.0,
+     "end": 0.6
+    },
+    {
+     "word": "bir",
+     "start": 0.6,
+     "end": 0.92
+    },
+    {
+     "word": "soru,",
+     "start": 0.92,
+     "end": 1.46
+    },
+    {
+     "word": "biraz",
+     "start": 1.78,
+     "end": 2.06
+    },
+    {
+     "word": "düşüneyim.",
+     "start": 2.06,
+     "end": 2.86
+    }
+   ],
+   "exact": true
+  },
+  {
+   "id": "s29",
+   "text": "Hoşça kalın, yine görüşmek üzere!",
+   "wav": "s29.wav",
+   "duration": 3.2,
+   "words": [
+    {
+     "word": "Hoşça",
+     "start": 0.0,
+     "end": 0.62
+    },
+    {
+     "word": "kalın,",
+     "start": 0.62,
+     "end": 1.26
+    },
+    {
+     "word": "yine",
+     "start": 1.5,
+     "end": 1.92
+    },
+    {
+     "word": "görüşmek",
+     "start": 1.92,
+     "end": 2.66
+    },
+    {
+     "word": "üzere!",
+     "start": 2.66,
+     "end": 3.06
+    }
+   ],
+   "exact": true
+  }
+ ]
+}

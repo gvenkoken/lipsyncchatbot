@@ -1,0 +1,99 @@
+{
+    "version":  1,
+    "canvas":  {
+                   "height":  1117,
+                   "width":  1122
+               },
+    "crop":  {
+                 "y":  344,
+                 "width":  324,
+                 "height":  76,
+                 "x":  414
+             },
+    "base":  "base.png",
+    "mask":  "eye-mask.png",
+    "frames":  [
+                   {
+                       "id":  1,
+                       "file":  "eyes-01.png",
+                       "width":  324,
+                       "height":  76,
+                       "alphaHash":  "861a6ca50a8abd558a3946458afda7a481e2b5f12bca3ee3faa0f32ecaf4cded",
+                       "outsideMaskChangedPixels":  0,
+                       "insideChangedPixels":  13271
+                   },
+                   {
+                       "id":  2,
+                       "file":  "eyes-02.png",
+                       "width":  324,
+                       "height":  76,
+                       "alphaHash":  "861a6ca50a8abd558a3946458afda7a481e2b5f12bca3ee3faa0f32ecaf4cded",
+                       "outsideMaskChangedPixels":  0,
+                       "insideChangedPixels":  13340
+                   },
+                   {
+                       "id":  3,
+                       "file":  "eyes-03.png",
+                       "width":  324,
+                       "height":  76,
+                       "alphaHash":  "861a6ca50a8abd558a3946458afda7a481e2b5f12bca3ee3faa0f32ecaf4cded",
+                       "outsideMaskChangedPixels":  0,
+                       "insideChangedPixels":  13312
+                   },
+                   {
+                       "id":  4,
+                       "file":  "eyes-04.png",
+                       "width":  324,
+                       "height":  76,
+                       "alphaHash":  "861a6ca50a8abd558a3946458afda7a481e2b5f12bca3ee3faa0f32ecaf4cded",
+                       "outsideMaskChangedPixels":  0,
+                       "insideChangedPixels":  13394
+                   },
+                   {
+                       "id":  5,
+                       "file":  "eyes-05.png",
+                       "width":  324,
+                       "height":  76,
+                       "alphaHash":  "861a6ca50a8abd558a3946458afda7a481e2b5f12bca3ee3faa0f32ecaf4cded",
+                       "outsideMaskChangedPixels":  0,
+                       "insideChangedPixels":  13330
+                   },
+                   {
+                       "id":  6,
+                       "file":  "eyes-06.png",
+                       "width":  324,
+                       "height":  76,
+                       "alphaHash":  "861a6ca50a8abd558a3946458afda7a481e2b5f12bca3ee3faa0f32ecaf4cded",
+                       "outsideMaskChangedPixels":  0,
+                       "insideChangedPixels":  13281
+                   },
+                   {
+                       "id":  7,
+                       "file":  "eyes-07.png",
+                       "width":  324,
+                       "height":  76,
+                       "alphaHash":  "861a6ca50a8abd558a3946458afda7a481e2b5f12bca3ee3faa0f32ecaf4cded",
+                       "outsideMaskChangedPixels":  0,
+                       "insideChangedPixels":  13449
+                   }
+               ],
+    "registration":  {
+                         "offsetY":  -5.5,
+                         "skinOffsets":  [
+                                             2.5812851123595504,
+                                             2.3695575842696628,
+                                             3.1732794943820224,
+                                             4.6172752808988768,
+                                             3.1260533707865168,
+                                             2.9111657303370788
+                                         ],
+                         "offsetX":  0.5,
+                         "anchorMeanError":  3.1242831541218639
+                     },
+    "timing":  {
+                   "gazeMaxMs":  24000,
+                   "blinkMaxMs":  11000,
+                   "blinkMinMs":  7000,
+                   "gazeMinMs":  16000
+               }
+}

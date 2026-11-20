@@ -1,0 +1,86 @@
+{
+  "voice": "ash",
+  "model": "gpt-4o-mini-tts",
+  "sentences": 29,
+  "words": 199,
+  "reference": "faster-whisper medium kelime başlangıçları; sessizlikten sonraki kelimeler ses başlangıcına çekildi",
+  "reference_starts_moved": 36,
+  "before": {
+    "mean_ms": 172.6,
+    "median_ms": 121.1,
+    "p90_ms": 417.9,
+    "n": 199
+  },
+  "before_vs_raw_whisper": {
+    "mean_ms": 204.2,
+    "median_ms": 134.8,
+    "p90_ms": 495.7,
+    "n": 199
+  },
+  "current_defaults": {
+    "mean_ms": 59.4,
+    "median_ms": 30,
+    "p90_ms": 120,
+    "n": 199
+  },
+  "current_defaults_vs_raw_whisper": {
+    "mean_ms": 94.2,
+    "median_ms": 60,
+    "p90_ms": 250,
+    "n": 199
+  },
+  "tuned_params": {
+    "hop": 0.01,
+    "threshold": 0.27,
+    "minSilence": 0.1,
+    "minSpeech": 0.04,
+    "vowel": 1,
+    "plosive": 0.62,
+    "fricative": 0.7,
+    "sonorant": 0.45,
+    "softG": 0,
+    "wordGap": 0.2,
+    "commaGap": 0.35,
+    "finalLengthen": 1,
+    "finalWord": 1,
+    "initialPad": 0,
+    "punctuationBonus": 0.25,
+    "longGap": 0.25,
+    "acoustic": 0.5,
+    "energyWeight": 1,
+    "zcrWeight": 0.5,
+    "zcrSibilant": 0.22,
+    "peakPull": 0.5,
+    "peakMaxShift": 0.06
+  },
+  "before_heldout": {
+    "mean_ms": 201.4,
+    "median_ms": 130.6,
+    "p90_ms": 519.6,
+    "n": 84
+  },
+  "after_train": {
+    "mean_ms": 57.3,
+    "median_ms": 40,
+    "p90_ms": 120,
+    "n": 115
+  },
+  "after_heldout": {
+    "mean_ms": 62.5,
+    "median_ms": 30,
+    "p90_ms": 140,
+    "n": 84
+  },
+  "after_all": {
+    "mean_ms": 59.5,
+    "median_ms": 30,
+    "p90_ms": 120,
+    "n": 199
+  },
+  "after_all_vs_raw_whisper": {
+    "mean_ms": 94.3,
+    "median_ms": 60,
+    "p90_ms": 250,
+    "n": 199
+  }
+}

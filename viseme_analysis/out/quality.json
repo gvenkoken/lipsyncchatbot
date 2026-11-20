@@ -1,0 +1,85 @@
+{
+  "lighting": {
+    "L_mean": 57.781808219204166,
+    "L_std": 0.9341633741280161,
+    "L_p05_p95": [
+      56.16931176470589,
+      59.21530980392157
+    ],
+    "L_range_1s_smoothed": 3.5820870588235323,
+    "a_std": 0.4800333641876085,
+    "b_std": 0.5198979424142595,
+    "dE_vs_median_p50": 0.9186564879765503,
+    "dE_vs_median_p95": 2.154662938901474,
+    "corr_L_pitch": -0.37056001521252757,
+    "corr_L_inner_open": -0.10821415879593194,
+    "first10s_vs_last10s_dL": -0.2115122039215649
+  },
+  "sharpness": {
+    "median": 20.97422,
+    "p05": 9.524795000000001,
+    "blurry_ratio_lt60pct": 0.21631463947560087,
+    "blurry_ratio_lt40pct": 0.023549405195435785,
+    "corr_with_jitter": 0.009082868816058728
+  },
+  "compression": {
+    "blockiness_median": 1.08126,
+    "blockiness_p95": 1.265682,
+    "blocky_ratio_gt1_3": 0.026219956300072834,
+    "blocky_ratio_gt1_5": 0.00048555474629764507,
+    "note": "8px ızgara sınırındaki gradyan / diğer gradyanlar; ~1.0 = blok yok, >1.3 görünür bloklanma"
+  },
+  "teeth": {
+    "open_frames": 1660,
+    "teeth_ratio_median_open": 0.35687,
+    "cavity_dark_ratio_median_open": 0.13307000000000002
+  },
+  "patch_match": {
+    "dE_ring_mean_median": 0.65,
+    "dE_ring_mean_max": 1.81,
+    "dE_ring_pixel_median": 1.82,
+    "worst": [
+      {
+        "patch": "E_2.png",
+        "viseme": "E",
+        "src_frame": 140,
+        "dE_ring_mean": 1.81,
+        "dL_ring": 1.81,
+        "dE_ring_pixel_median": 2.01
+      },
+      {
+        "patch": "E_3.png",
+        "viseme": "E",
+        "src_frame": 4083,
+        "dE_ring_mean": 1.73,
+        "dL_ring": 1.72,
+        "dE_ring_pixel_median": 1.91
+      },
+      {
+        "patch": "SH_3.png",
+        "viseme": "SH",
+        "src_frame": 1768,
+        "dE_ring_mean": 1.25,
+        "dL_ring": 1.12,
+        "dE_ring_pixel_median": 2.24
+      },
+      {
+        "patch": "DNT_1.png",
+        "viseme": "DNT",
+        "src_frame": 3228,
+        "dE_ring_mean": 1.16,
+        "dL_ring": 1.13,
+        "dE_ring_pixel_median": 1.81
+      },
+      {
+        "patch": "DNT_3.png",
+        "viseme": "DNT",
+        "src_frame": 1008,
+        "dE_ring_mean": 1.02,
+        "dL_ring": 0.98,
+        "dE_ring_pixel_median": 1.82
+      }
+    ],
+    "note": "ΔE<2 fark edilmez, 2–5 dikkatli bakınca, >5 belirgin"
+  }
+}

@@ -1,5 +1,11 @@
 node_modules/
 dist/
-*.tsbuildinfo
-playwright-report/
-test-results/
+artifacts/
+.tmp/
+*.log
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.pyc

@@ -1,0 +1,93 @@
+[
+ {
+  "voice": "alloy",
+  "f0_median": 137.0,
+  "dur": 9.5,
+  "word_errors": 0,
+  "heard": "merhaba ben dijital asistanınızım bugün size nasıl yardımcı olabilirim isterseniz birlikte kısa bir plan yapalım"
+ },
+ {
+  "voice": "ash",
+  "f0_median": 121.0,
+  "dur": 8.95,
+  "word_errors": 0,
+  "heard": "merhaba ben dijital asistanınızım bugün size nasıl yardımcı olabilirim isterseniz birlikte kısa bir plan yapalım"
+ },
+ {
+  "voice": "ballad",
+  "f0_median": 184.0,
+  "dur": 9.0,
+  "word_errors": 0,
+  "heard": "merhaba ben dijital asistanınızım bugün size nasıl yardımcı olabilirim isterseniz birlikte kısa bir plan yapalım"
+ },
+ {
+  "voice": "cedar",
+  "f0_median": 145.0,
+  "dur": 8.55,
+  "word_errors": 0,
+  "heard": "merhaba ben dijital asistanınızım bugün size nasıl yardımcı olabilirim isterseniz birlikte kısa bir plan yapalım"
+ },
+ {
+  "voice": "coral",
+  "f0_median": 224.0,
+  "dur": 9.3,
+  "word_errors": 0,
+  "heard": "merhaba ben dijital asistanınızım bugün size nasıl yardımcı olabilirim isterseniz birlikte kısa bir plan yapalım"
+ },
+ {
+  "voice": "echo",
+  "f0_median": 123.0,
+  "dur": 8.8,
+  "word_errors": 0,
+  "heard": "merhaba ben dijital asistanınızım bugün size nasıl yardımcı olabilirim isterseniz birlikte kısa bir plan yapalım"
+ },
+ {
+  "voice": "fable",
+  "f0_median": 136.0,
+  "dur": 8.85,
+  "word_errors": 0,
+  "heard": "merhaba ben dijital asistanınızım bugün size nasıl yardımcı olabilirim isterseniz birlikte kısa bir plan yapalım"
+ },
+ {
+  "voice": "marin",
+  "f0_median": 202.0,
+  "dur": 8.75,
+  "word_errors": 0,
+  "heard": "merhaba ben dijital asistanınızım bugün size nasıl yardımcı olabilirim isterseniz birlikte kısa bir plan yapalım"
+ },
+ {
+  "voice": "nova",
+  "f0_median": 170.0,
+  "dur": 8.0,
+  "word_errors": 0,
+  "heard": "merhaba ben dijital asistanınızım bugün size nasıl yardımcı olabilirim isterseniz birlikte kısa bir plan yapalım"
+ },
+ {
+  "voice": "onyx",
+  "f0_median": 96.0,
+  "dur": 8.25,
+  "word_errors": 0,
+  "heard": "merhaba ben dijital asistanınızım bugün size nasıl yardımcı olabilirim isterseniz birlikte kısa bir plan yapalım"
+ },
+ {
+  "voice": "sage",
+  "f0_median": 221.0,
+  "dur": 9.35,
+  "word_errors": 0,
+  "heard": "merhaba ben dijital asistanınızım bugün size nasıl yardımcı olabilirim isterseniz birlikte kısa bir plan yapalım"
+ },
+ {
+  "voice": "shimmer",
+  "f0_median": 152.0,
+  "dur": 8.55,
+  "word_errors": 0,
+  "heard": "merhaba ben dijital asistanınızım bugün size nasıl yardımcı olabilirim isterseniz birlikte kısa bir plan yapalım"
+ },
+ {
+  "voice": "verse",
+  "f0_median": 167.0,
+  "dur": 9.2,
+  "word_errors": 0,
+  "heard": "merhaba ben dijital asistanınızım bugün size nasıl yardımcı olabilirim isterseniz birlikte kısa bir plan yapalım"
+ }
+]

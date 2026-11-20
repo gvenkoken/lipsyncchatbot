@@ -1,0 +1,171 @@
+{
+    "version":  2,
+    "canvas":  {
+                   "height":  1117,
+                   "width":  1122
+               },
+    "crop":  {
+                 "y":  520,
+                 "width":  184,
+                 "height":  104,
+                 "x":  480
+             },
+    "base":  "base.png",
+    "reference":  "reference.png",
+    "mask":  "mouth-mask.png",
+    "mainFrames":  [
+                       1,
+                       2,
+                       3,
+                       4,
+                       5
+                   ],
+    "openingOrder":  [
+                         1,
+                         6,
+                         7,
+                         2,
+                         8,
+                         3,
+                         9,
+                         10,
+                         4,
+                         11,
+                         12,
+                         5
+                     ],
+    "frames":  [
+                   {
+                       "id":  1,
+                       "file":  "mouth-01.png",
+                       "width":  184,
+                       "height":  104,
+                       "sourceOutsideCropChangedPixels":  0,
+                       "outsideCropChangedPixels":  0,
+                       "outsideMaskChangedPixels":  0,
+                       "insideCropChangedPixels":  0,
+                       "alphaHash":  "0ca7cee812e29ed172f209f7edc328841715126004ae6d1e2175e80450277446"
+                   },
+                   {
+                       "id":  2,
+                       "file":  "mouth-02.png",
+                       "width":  184,
+                       "height":  104,
+                       "sourceOutsideCropChangedPixels":  0,
+                       "outsideCropChangedPixels":  0,
+                       "outsideMaskChangedPixels":  0,
+                       "insideCropChangedPixels":  9241,
+                       "alphaHash":  "0ca7cee812e29ed172f209f7edc328841715126004ae6d1e2175e80450277446"
+                   },
+                   {
+                       "id":  3,
+                       "file":  "mouth-03.png",
+                       "width":  184,
+                       "height":  104,
+                       "sourceOutsideCropChangedPixels":  0,
+                       "outsideCropChangedPixels":  0,
+                       "outsideMaskChangedPixels":  0,
+                       "insideCropChangedPixels":  9662,
+                       "alphaHash":  "0ca7cee812e29ed172f209f7edc328841715126004ae6d1e2175e80450277446"
+                   },
+                   {
+                       "id":  4,
+                       "file":  "mouth-04.png",
+                       "width":  184,
+                       "height":  104,
+                       "sourceOutsideCropChangedPixels":  0,
+                       "outsideCropChangedPixels":  0,
+                       "outsideMaskChangedPixels":  0,
+                       "insideCropChangedPixels":  10045,
+                       "alphaHash":  "0ca7cee812e29ed172f209f7edc328841715126004ae6d1e2175e80450277446"
+                   },
+                   {
+                       "id":  5,
+                       "file":  "mouth-05.png",
+                       "width":  184,
+                       "height":  104,
+                       "sourceOutsideCropChangedPixels":  0,
+                       "outsideCropChangedPixels":  0,
+                       "outsideMaskChangedPixels":  0,
+                       "insideCropChangedPixels":  10542,
+                       "alphaHash":  "0ca7cee812e29ed172f209f7edc328841715126004ae6d1e2175e80450277446"
+                   },
+                   {
+                       "id":  6,
+                       "file":  "mouth-06.png",
+                       "width":  184,
+                       "height":  104,
+                       "sourceOutsideCropChangedPixels":  0,
+                       "outsideCropChangedPixels":  0,
+                       "outsideMaskChangedPixels":  0,
+                       "insideCropChangedPixels":  9692,
+                       "alphaHash":  "0ca7cee812e29ed172f209f7edc328841715126004ae6d1e2175e80450277446"
+                   },
+                   {
+                       "id":  7,
+                       "file":  "mouth-07.png",
+                       "width":  184,
+                       "height":  104,
+                       "sourceOutsideCropChangedPixels":  0,
+                       "outsideCropChangedPixels":  0,
+                       "outsideMaskChangedPixels":  0,
+                       "insideCropChangedPixels":  10061,
+                       "alphaHash":  "0ca7cee812e29ed172f209f7edc328841715126004ae6d1e2175e80450277446"
+                   },
+                   {
+                       "id":  8,
+                       "file":  "mouth-08.png",
+                       "width":  184,
+                       "height":  104,
+                       "sourceOutsideCropChangedPixels":  0,
+                       "outsideCropChangedPixels":  0,
+                       "outsideMaskChangedPixels":  0,
+                       "insideCropChangedPixels":  10393,
+                       "alphaHash":  "0ca7cee812e29ed172f209f7edc328841715126004ae6d1e2175e80450277446"
+                   },
+                   {
+                       "id":  9,
+                       "file":  "mouth-09.png",
+                       "width":  184,
+                       "height":  104,
+                       "sourceOutsideCropChangedPixels":  0,
+                       "outsideCropChangedPixels":  0,
+                       "outsideMaskChangedPixels":  0,
+                       "insideCropChangedPixels":  10613,
+                       "alphaHash":  "0ca7cee812e29ed172f209f7edc328841715126004ae6d1e2175e80450277446"
+                   },
+                   {
+                       "id":  10,
+                       "file":  "mouth-10.png",
+                       "width":  184,
+                       "height":  104,
+                       "sourceOutsideCropChangedPixels":  0,
+                       "outsideCropChangedPixels":  0,
+                       "outsideMaskChangedPixels":  0,
+                       "insideCropChangedPixels":  10591,
+                       "alphaHash":  "0ca7cee812e29ed172f209f7edc328841715126004ae6d1e2175e80450277446"
+                   },
+                   {
+                       "id":  11,
+                       "file":  "mouth-11.png",
+                       "width":  184,
+                       "height":  104,
+                       "sourceOutsideCropChangedPixels":  0,
+                       "outsideCropChangedPixels":  0,
+                       "outsideMaskChangedPixels":  0,
+                       "insideCropChangedPixels":  11047,
+                       "alphaHash":  "0ca7cee812e29ed172f209f7edc328841715126004ae6d1e2175e80450277446"
+                   },
+                   {
+                       "id":  12,
+                       "file":  "mouth-12.png",
+                       "width":  184,
+                       "height":  104,
+                       "sourceOutsideCropChangedPixels":  0,
+                       "outsideCropChangedPixels":  0,
+                       "outsideMaskChangedPixels":  0,
+                       "insideCropChangedPixels":  11057,
+                       "alphaHash":  "0ca7cee812e29ed172f209f7edc328841715126004ae6d1e2175e80450277446"
+                   }
+               ]
+}
