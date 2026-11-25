@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
-import { createAvatarHandler, type AvatarConfig } from '../server/avatar.ts';
+import { createAvatarHandler, type AvatarConfig } from '../src/avatar.ts';
 
 const SECRET = 'sk-openai-test-secret';
 const config = (patch: Partial<AvatarConfig> = {}): AvatarConfig => ({ openaiApiKey: SECRET, chatModel: 'gpt-5.4-mini', ttsModel: 'gpt-4o-mini-tts', ttsVoice: 'ash', sttModel: 'gpt-transcribe', ...patch });

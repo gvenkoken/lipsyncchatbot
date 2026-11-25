@@ -1,6 +1,6 @@
 import { spawn, type ChildProcess } from 'node:child_process';
 import { join } from 'node:path';
-import type { SynthesiaConfig } from './synthesia';
+import type { SynthesiaConfig } from './synthesia.ts';
 
 export function createSynthesiaManager(root: string) {
   let child: ChildProcess | undefined, ready: Promise<void> | undefined, signature = '';
@@ -16,7 +16,7 @@ export function createSynthesiaManager(root: string) {
     if (ready && signature === nextSignature) return ready;
     if (child) dispose(); signature = nextSignature;
     ready = new Promise<void>((resolve, reject) => {
-      const worker = spawn(process.execPath, [join(root, 'server', 'synthesia-worker.mjs')], {
+      const worker = spawn(process.execPath, [join(root, 'src', 'synthesia-worker.mjs')], {
         cwd: root, windowsHide: true, stdio: ['ignore', 'ignore', 'ignore', 'ipc'],
         // OpenAI performs turn detection; do not download/warm an unused local EOT model.
         env: { ...process.env, LIVEKIT_AGENTS_PRELOAD_LOCAL_INFERENCE: '0', SYNTHESIA_API_KEY: config.apiKey, SYNTHESIA_AVATAR_DEFAULT_ID: config.defaultAvatarId,

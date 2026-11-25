@@ -3,9 +3,10 @@ import assert from 'node:assert/strict';
 import { join } from 'node:path';
 import { mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { allowed, createIndex, createRag, loadDocs, parseDoc, parseRole, selectHits, tokens, toolResult, type Hit, type Role } from '../server/rag.ts';
+import { allowed, createIndex, createRag, loadDocs, parseDoc, parseRole, selectHits, tokens, toolResult, type Hit, type Role } from '../src/rag.ts';
+import { PROMPT_KEYS, fill, parsePrompts } from '../src/rag-prompt.ts';
 
-const ROOT = join(import.meta.dirname, '..', 'pmi-rag-dummy');
+const ROOT = join(import.meta.dirname, '..', '..', 'rag', 'pmi-rag-dummy');
 const docs = loadDocs(ROOT), index = createIndex(docs);
 const top = (query: string, role: Role, k = 3) => index.search(query, role, k).map(hit => hit.id);
 
@@ -93,4 +94,11 @@ test('seçim: ilgisiz sonuçlar modele ve ekrana gitmez; test sorularında bekle
   const picked = selectHits([hit('A', .6, 8), hit('B', .33, 0), hit('C', .2, 1)]);
   assert.deepEqual([picked.context.map(item => item.id), picked.sources.map(item => item.id)], [['A', 'B'], ['A']]);
   assert.deepEqual(selectHits([hit('A', .38, 6), hit('B', .45, 3)]).context, [], 'en iyi sonuç eşiğin altındaysa bilgi verilmez');
+});
+
+test('rag-prompt.md: tüm bölümler okunur, eksik bölüm hata verir, yer tutucular dolar', () => {
+  const prompts = parsePrompts(readFileSync(join(import.meta.dirname, '..', '..', 'rag', 'rag-prompt.md'), 'utf8'));
+  assert.deepEqual(Object.keys(prompts), [...PROMPT_KEYS]);
+  assert.match(fill(prompts.bilgi_tabani, { arac: 'bilgi_tabaninda_ara' }), /bilgi_tabaninda_ara aracını/);
+  assert.throws(() => parsePrompts('## kimlik\nMerhaba'), /eksik bölüm/);
 });

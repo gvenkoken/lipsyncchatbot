@@ -1,10 +1,11 @@
-// Bilgi tabanı araması (RAG): pmi-rag-dummy altındaki Markdown belgelerini yükler, role göre filtreler ve arar.
+// Bilgi tabanı araması (RAG): rag/pmi-rag-dummy altındaki Markdown belgelerini yükler, role göre filtreler ve arar.
 // Tüm sohbet yolları (Gemini Live, OpenAI Realtime, zincir) aynı servisi kullanır.
 // Sıra: rol -> izinli belgeler -> hibrit arama (kelime + varsa anlam vektörü) -> en iyi k belge.
 // Yetki filtresi aramadan ÖNCE uygulanır: izinsiz belge puanlanmaz, sonuçlara da modele de hiç ulaşmaz.
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { join, relative } from 'node:path';
+import { loadPrompts } from './rag-prompt.ts';
 
 export type Role = 'employee' | 'partner' | 'guest';
 export const ROLES: Role[] = ['employee', 'partner', 'guest'];
@@ -147,8 +148,9 @@ export function selectHits(hits: Hit[]): { context: Hit[]; sources: Hit[] } {
   return { context: hits.filter((hit, index) => index === 0 || confident(hit) || supporting(hit)), sources: hits.filter(confident).slice(0, 2) };
 }
 
-/** Modele verilen araç yanıtı: belge metinleri + nasıl kullanılacağı. Sonuç yoksa bunu açıkça söyler. */
+/** Modele verilen araç yanıtı: belge metinleri + nasıl kullanılacağı. Sonuç yoksa bunu açıkça söyler. Metinler rag-prompt.md'den gelir. */
 export function toolResult(hits: Hit[], role: Role) {
-  if (!hits.length) return { sonuc: 'Bu rol için bilgi tabanında ilgili belge bulunamadı.', talimat: role === 'guest' ? 'Kullanıcı giriş yapmadı. Çalışan ya da iş ortağı belgeleri için sağ üstten giriş yapması gerektiğini söyle; bilgi uydurma.' : 'Bu konuda bilgin olmadığını ya da bu rolün erişimi olmadığını söyle; bilgi uydurma, başka rolün belgelerinden söz etme.' };
-  return { belgeler: hits.map(hit => ({ kimlik: hit.id, baslik: hit.title, icerik: hit.text })), talimat: 'Yalnızca bu belgelere dayanarak kısa ve sesli okunacak biçimde yanıtla. Belge kimliğini ve başlığını sesli söyleme; ekranda ayrıca gösteriliyor. Belgede olmayan ayrıntıyı uydurma.' };
+  const prompts = loadPrompts();
+  if (!hits.length) return { sonuc: prompts.sonuc_yok, talimat: role === 'guest' ? prompts.sonuc_yok_misafir_talimat : prompts.sonuc_yok_talimat };
+  return { belgeler: hits.map(hit => ({ kimlik: hit.id, baslik: hit.title, icerik: hit.text })), talimat: prompts.sonuc_var_talimat };
 }

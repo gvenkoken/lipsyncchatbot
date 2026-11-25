@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
 import { WebSocketServer } from 'ws';
 import { WorkerMessage, ServerMessage, RegisterWorkerResponse } from '@livekit/protocol';
-import { createSynthesiaManager } from '../server/synthesia-manager.ts';
+import { createSynthesiaManager } from '../src/synthesia-manager.ts';
 
 test('native worker starts on Windows, registers the named agent, and closes with its local server', async () => {
   const root = fileURLToPath(new URL('..', import.meta.url));

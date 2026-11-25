@@ -1,8 +1,8 @@
 param([string]$SourceDirectory = 'C:/Users/koken/Downloads')
 $ErrorActionPreference='Stop'
 Add-Type -AssemblyName System.Drawing
-$target=Join-Path $PSScriptRoot '../public/eye-rig'
-$mouth=Join-Path $PSScriptRoot '../public/mouth-rig'
+$target=Join-Path $PSScriptRoot '../web/public/eye-rig'
+$mouth=Join-Path $PSScriptRoot '../web/public/mouth-rig'
 New-Item -ItemType Directory -Path $target -Force | Out-Null
 $stamps=@('12_36_32-1','12_36_33-2','12_36_36-3','12_36_37-4','12_36_38-5','12_36_42-6','12_36_43-7')
 $sources=@()

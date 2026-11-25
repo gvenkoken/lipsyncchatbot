@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
-import { createSynthesiaHandler, type SynthesiaConfig } from '../server/synthesia.ts';
+import { createSynthesiaHandler, type SynthesiaConfig } from '../src/synthesia.ts';
 
 const config: SynthesiaConfig = { apiKey: 'synth-secret', defaultAvatarId: 'av_default', customAvatarId: 'av_custom',
   livekitUrl: 'wss://example.livekit.cloud', livekitApiKey: 'API-test', livekitApiSecret: 'room-secret-value-12345678901234567890', openaiApiKey: 'openai-secret', openaiModel: 'gpt-realtime-2.1' };

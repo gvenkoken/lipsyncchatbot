@@ -1,0 +1,27 @@
+{
+  "name": "lipsysnc-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --experimental-strip-types --watch-path=src src/server.ts",
+    "start": "node --experimental-strip-types src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test tests/*.test.ts"
+  },
+  "dependencies": {
+    "@livekit/agents": "1.9.5",
+    "@livekit/agents-plugin-openai": "1.9.5",
+    "@livekit/agents-plugin-synthesia": "1.9.5",
+    "@livekit/rtc-node": "1.2.2",
+    "google-auth-library": "11.3.4",
+    "livekit-server-sdk": "2.19.3",
+    "ws": "8.22.2"
+  },
+  "devDependencies": {
+    "@livekit/protocol": "1.53.4",
+    "@types/node": "22.19.19",
+    "@types/ws": "8.18.2",
+    "typescript": "5.8.3"
+  }
+}

@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
-import { createRealtimeHandler } from '../server/realtime.ts';
+import { createRealtimeHandler } from '../src/realtime.ts';
 
 const sdp = 'v=0\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111\r\n';
 async function server(apiKey: string, upstream: typeof fetch) {

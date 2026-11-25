@@ -8,6 +8,7 @@ import { randomUUID } from 'node:crypto';
 import { GoogleAuth } from 'google-auth-library';
 import WebSocket, { WebSocketServer } from 'ws';
 import { parseRole, selectHits, toolResult, type Rag, type Role } from './rag.ts';
+import { fill, loadPrompts } from './rag-prompt.ts';
 
 export type GeminiConfig = { project: string; location: string; model: string; avatar: string; credentialsFile: string };
 /** Demo oturumu: ad ve rol istemciden gelir (gerçek kimlik doğrulama değildir). */
@@ -15,18 +16,13 @@ export type GeminiUser = { name: string; role: Role };
 export const SEARCH_TOOL = 'bilgi_tabaninda_ara';
 const ROLE_TEXT: Record<Role, string> = { employee: 'çalışan', partner: 'iş ortağı (bayi)', guest: 'giriş yapmamış misafir' };
 export const cleanName = (value: unknown) => typeof value === 'string' ? value.replace(/[^\p{L}\p{M} .'-]/gu, '').replace(/\s+/g, ' ').trim().slice(0, 40) : '';
-/** Sistem talimatı: kimlik, konuşma biçimi, kullanıcı ve bilgi tabanı kuralları. */
+/** Sistem talimatı: kimlik, konuşma biçimi, kullanıcı ve bilgi tabanı kuralları. Metinler rag-prompt.md'den gelir. */
 export function geminiInstruction(user?: GeminiUser) {
-  const lines = ['Sen PMI Assistant adlı sesli asistansın. Kullanıcıyla varsayılan olarak Türkçe, kısa, doğal ve yardımcı cümlelerle konuş.'];
-  if (!user) return lines[0];
-  lines.push(user.name ? `Konuştuğun kişinin adı ${user.name}; rolü: ${ROLE_TEXT[user.role]}. Ona adıyla hitap edebilirsin.` : `Konuştuğun kişinin rolü: ${ROLE_TEXT[user.role]}.`);
-  lines.push(`Şirket süreçleri, İK, IT, masraf, seyahat, satın alma, güvenlik, portal, fatura, ödeme, bayi ve destek konularındaki her soruda yanıtlamadan önce ${SEARCH_TOOL} aracını çağır ve yalnızca dönen belgelere dayan. Selamlaşma ve gündelik sohbet için aracı çağırma.`);
-  lines.push('Araç yalnızca bu kişinin rolüne açık belgeleri döndürür. Belge dönmezse bu konuda bilgin olmadığını ya da erişimin olmadığını söyle; bilgi uydurma, başka rollerin belgelerinden söz etme.');
-  if (user.role === 'guest') lines.push('Kişi giriş yapmadı: çalışan ya da iş ortağı içeriği için sayfanın sağ üstünden giriş yapması gerektiğini söyle.');
-  lines.push('Belgeler kurgusal demo içeriğidir: resmî şirket politikası gibi sunma. İzin bakiyesi, ödeme durumu, talep ya da sözleşme gibi kişiye özel canlı verilere erişimin yok; ilgili portala yönlendir.');
-  lines.push('Parola, doğrulama kodu, API anahtarı, kimlik ya da banka bilgisi isteme; kullanıcı söylerse tekrar etme. Tütün ve nikotin ürünlerini tanıtma, önerme, satışına yardım etme.');
-  lines.push('Kaynak belgenin adını ya da kimliğini sesli söyleme; ekranda altyazı olarak gösteriliyor. Yanıtların bir ile üç cümle olsun; adımları "önce", "sonra" diye bağla.');
-  return lines.join('\n');
+  const prompts = loadPrompts();
+  if (!user) return prompts.kimlik;
+  const values = { ad: user.name, rol: ROLE_TEXT[user.role], arac: SEARCH_TOOL };
+  const sections = [prompts.kimlik, user.name ? prompts.kullanici_adli : prompts.kullanici, prompts.bilgi_tabani, ...(user.role === 'guest' ? [prompts.misafir] : []), prompts.kurallar];
+  return sections.map(text => fill(text, values)).join('\n');
 }
 type Options = { rag?: Rag; getConfig: () => GeminiConfig; getToken?: (config: GeminiConfig) => Promise<string | null>; credentialsAvailable?: (config: GeminiConfig) => boolean; connect?: (url: string, token: string) => WebSocket; sessionLifetimeMs?: number };
 const projectPattern = /^[a-z][a-z\d-]{4,61}[a-z\d]$/;
@@ -44,12 +40,13 @@ export function geminiStatus(config: GeminiConfig, credentials = hasGeminiCreden
   return { configured: missing.length === 0, missing, model: config.model, avatar: config.avatar };
 }
 export function buildGeminiSetup(config: GeminiConfig, user?: GeminiUser) {
+  const prompts = loadPrompts();
   return { setup: {
     model: `projects/${config.project}/locations/${config.location}/publishers/google/models/${config.model}`,
     generation_config: { response_modalities: ['VIDEO'], speech_config: { language_code: 'tr-TR', voice_config: { prebuilt_voice_config: { voice_name: 'Puck' } } } },
     avatar_config: { avatar_name: config.avatar },
     system_instruction: { parts: [{ text: geminiInstruction(user) }] },
-    ...(user ? { tools: [{ function_declarations: [{ name: SEARCH_TOOL, description: 'Kurumsal bilgi tabanında arar ve kullanıcının rolüne açık en ilgili belgeleri döndürür.', parameters: { type: 'OBJECT', properties: { sorgu: { type: 'STRING', description: 'Kullanıcının sorusunun kısa, Türkçe arama ifadesi' } }, required: ['sorgu'] } }] }] } : {}),
+    ...(user ? { tools: [{ function_declarations: [{ name: SEARCH_TOOL, description: prompts.arac_aciklamasi, parameters: { type: 'OBJECT', properties: { sorgu: { type: 'STRING', description: prompts.arac_sorgu_aciklamasi } }, required: ['sorgu'] } }] }] } : {}),
     input_audio_transcription: {}, output_audio_transcription: {},
     realtime_input_config: { automatic_activity_detection: { silence_duration_ms: 650, prefix_padding_ms: 200 }, activity_handling: 'START_OF_ACTIVITY_INTERRUPTS' },
   } };
@@ -129,7 +126,7 @@ export function createGeminiHandler(options: Options) {
           const { context, sources } = selectHits(hits);
           forward(context.length ? `
 
-[Bilgi tabanı bu soru için arandı; ${SEARCH_TOOL} aracını yeniden çağırma. Sonuç: ${JSON.stringify(toolResult(context, role))}]` : '');
+[${fill(loadPrompts().yazili_soru_notu, { arac: SEARCH_TOOL })} ${JSON.stringify(toolResult(context, role))}]` : '');
           if (sources.length) send({ type: 'sources', sources: sources.map(hit => ({ id: hit.id, title: hit.title })) });
         });
       } catch { fail('invalid_message', 'Gemini isteği okunamadı.'); }

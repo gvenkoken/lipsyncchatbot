@@ -1,0 +1,84 @@
+{
+  "folders": [
+    {
+      "name": "web",
+      "path": "web"
+    },
+    {
+      "name": "backend",
+      "path": "backend"
+    },
+    {
+      "name": "rag",
+      "path": "rag"
+    },
+    {
+      "name": "lipsysnc (kök)",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/node_modules": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "artifacts": true,
+      "viseme_analysis/out*": true
+    },
+    "typescript.tsdk": "node_modules/typescript/lib"
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "backend",
+        "type": "node",
+        "request": "launch",
+        "cwd": "${workspaceFolder:backend}",
+        "runtimeArgs": [
+          "--experimental-strip-types"
+        ],
+        "program": "${workspaceFolder:backend}/src/server.ts",
+        "console": "integratedTerminal"
+      },
+      {
+        "name": "web (Chrome)",
+        "type": "chrome",
+        "request": "launch",
+        "url": "http://127.0.0.1:5176/",
+        "webRoot": "${workspaceFolder:web}"
+      }
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "lipsysnc: dev (web + backend)",
+        "type": "shell",
+        "command": "npm run dev",
+        "options": {
+          "cwd": "${workspaceFolder:lipsysnc (kök)}"
+        },
+        "isBackground": true,
+        "problemMatcher": [],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        }
+      },
+      {
+        "label": "lipsysnc: test",
+        "type": "shell",
+        "command": "npm test",
+        "options": {
+          "cwd": "${workspaceFolder:lipsysnc (kök)}"
+        },
+        "problemMatcher": [],
+        "group": "test"
+      }
+    ]
+  }
+}

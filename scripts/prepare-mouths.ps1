@@ -1,7 +1,7 @@
 param([string]$SourceDirectory = 'C:/Users/koken/Downloads')
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
-$target = Join-Path $PSScriptRoot '../public/mouth-rig'
+$target = Join-Path $PSScriptRoot '../web/public/mouth-rig'
 New-Item -ItemType Directory -Path $target -Force | Out-Null
 $main = Get-ChildItem -LiteralPath $SourceDirectory -File | Where-Object { $_.Name -like 'Siyah Arka Planda Temiz T*Portre.png' } | Select-Object -First 1
 if (!$main) { throw 'Main portrait not found.' }

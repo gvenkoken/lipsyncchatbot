@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { EventEmitter } from 'node:events';
 import WebSocket from 'ws';
-import { createGeminiHandler, type GeminiConfig } from '../server/gemini.ts';
+import { createGeminiHandler, type GeminiConfig } from '../src/gemini.ts';
 
 const config: GeminiConfig = { project: 'pmi-test-project', location: 'us-central1', model: 'gemini-3.8-live', avatar: 'Ben', credentialsFile: 'private-credential-file' };
 class Upstream extends EventEmitter {

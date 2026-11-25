@@ -1,17 +1,34 @@
-# lipsysncdemo
+# lipsysnc
 
-React + TypeScript + Vite ile hazırlanmış **PMI Assistant**. **Video avatar**, **Avatar + OpenAI**, **Synthesia** ve **Gemini** modları vardır. Varsayılan, gerçek videodan üretilmiş dudak senkronlu **Video avatar** modudur. Yerel Vite sunucusu kimlik bilgilerini sunucuda tutar. Synthesia için Node.js LiveKit agent süreci ilk bağlantıda otomatik açılır; Vite kapatıldığında kapanır. Gemini'nin kendi ürettiği canlı avatar videosu Google Cloud üzerinden alınır.
+React + TypeScript + Vite ile hazırlanmış **PMI Assistant**. **Video avatar**, **Avatar + OpenAI**, **Synthesia** ve **Gemini** modları vardır. Varsayılan, gerçek videodan üretilmiş dudak senkronlu **Video avatar** modudur. Kimlik bilgileri yalnızca **backend** projesinde tutulur. Synthesia için Node.js LiveKit agent süreci ilk bağlantıda otomatik açılır; backend kapatıldığında kapanır. Gemini'nin kendi ürettiği canlı avatar videosu Google Cloud üzerinden alınır.
+
+## Yapı
+
+```text
+lipsysnc/
+  lipsysnc.code-workspace   VS Code çalışma alanı (web, backend, rag ve kök klasör)
+  web/                      Arayüz: React + Vite (port 5176). /api isteklerini backend'e aktarır
+  backend/                  Sunucu: Node.js (port 5177). Bütün /api uç noktaları, anahtarlar (.env.local)
+  rag/                      Bilgi tabanı belgeleri (pmi-rag-dummy/) ve RAG prompt metinleri (rag-prompt.md)
+  scripts/                  Tarayıcı QA betikleri, varlık hazırlama, birlikte başlatma (dev.mjs)
+  viseme_analysis/          Video avatar varlıklarını üreten analiz hattı
+  artifacts/                QA raporları ve ekran görüntüleri (Git dışında)
+```
+
+`web` ve `backend` birer npm workspace'tir; bağımlılıklar kökte tek bir `npm install` ile kurulur. RAG klasörü iki projenin de dışındadır; backend onu `../rag` yolundan okur.
 
 ## Başlatma
 
-Proje klasörü: `C:\Users\koken\Desktop\Me\lipsysncdemo`
+VS Code'da **File → Open Workspace from File…** ile `lipsysnc.code-workspace` dosyasını açın. Ardından **Terminal → Run Build Task** (`Ctrl+Shift+B`) iki projeyi birlikte başlatır. Komut satırından:
 
 ```powershell
 npm.cmd install
 npm.cmd run dev
 ```
 
-Adres: **http://127.0.0.1:5176/**. `Start-lipsysncdemo.cmd` de geliştirme sunucusunu açar. İlk teslimde bağımlılıklar hazırdır; doğrudan `npm.cmd run dev` çalıştırılabilir. Node.js 22.19 veya üzeri önerilir.
+`npm run dev` backend'i (http://127.0.0.1:5177/api) ve web'i birlikte başlatır; Ctrl+C ikisini de durdurur. Ayrı ayrı başlatmak için `npm.cmd run dev:backend` ve `npm.cmd run dev:web` kullanılır. Web, backend'e farklı bir adresten ulaşacaksa `BACKEND_URL` ortam değişkeni verilir; backend portu `BACKEND_PORT` ile değiştirilebilir.
+
+Adres: **http://127.0.0.1:5176/**. `Start-lipsysnc.cmd` de iki projeyi birlikte açar. Node.js 22.19 veya üzeri önerilir.
 
 ## Kullanım
 
@@ -34,7 +51,7 @@ Sohbet kutusunun üstünde ~300 px'lik, gerçek videodan çıkarılmış ağız 
 
 ### Kurulum
 
-1. `.env.example` dosyasını `.env.local` olarak kopyalayın (varsa mevcut dosyaya ekleyin) ve şu satırları doldurun:
+1. `backend/.env.example` dosyasını `backend/.env.local` olarak kopyalayın (varsa mevcut dosyaya ekleyin) ve şu satırları doldurun:
 
 ```dotenv
 OPENAI_API_KEY=anahtariniz
@@ -44,7 +61,7 @@ OPENAI_TTS_VOICE=ash
 OPENAI_STT_MODEL=gpt-transcribe
 ```
 
-2. `npm.cmd run dev` ile başlatın; Vite `.env.local` değişince kendiliğinden yeniden başlar. Sağ alttaki balona tıklayın.
+2. `npm.cmd run dev` ile başlatın; backend `.env.local` dosyasını her istekte yeniden okur, yeniden başlatma gerekmez. Sağ alttaki balona tıklayın.
 
 | Değişken | Ne işe yarar | Varsayılan |
 |---|---|---|
@@ -53,7 +70,7 @@ OPENAI_STT_MODEL=gpt-transcribe
 | `OPENAI_TTS_MODEL` / `OPENAI_TTS_VOICE` | Ses modeli ve sesi. Adaylar `viseme_analysis/voices/` altında dinlenebilir | `gpt-4o-mini-tts` / `ash` |
 | `OPENAI_STT_MODEL` | Mikrofon kaydını yazıya çeviren model | `gpt-transcribe` |
 
-Anahtarlar yalnızca sunucuda (`server/avatar.ts`) okunur; `VITE_` önekiyle tanımlamayın. Tarayıcıya, loglara ve hata mesajlarına yazılmaz. Asistanın üslubu `server/persona.md` dosyasındadır; dosyayı düzenlemek yeterlidir, yeniden başlatma gerekmez.
+Anahtarlar yalnızca backend'de (`backend/src/avatar.ts`) okunur; `VITE_` önekiyle tanımlamayın. Tarayıcıya, loglara ve hata mesajlarına yazılmaz. Asistanın üslubu `backend/src/persona.md` dosyasındadır; dosyayı düzenlemek yeterlidir, yeniden başlatma gerekmez.
 
 **Anahtar yokken:** kutu çalışmaya devam eder; avatar **demo modunda** açılır, gömülü bir cümleyi söyler ve mikrofon düğmesi kapalıdır.
 
@@ -63,7 +80,7 @@ Anahtarlar yalnızca sunucuda (`server/avatar.ts`) okunur; `VITE_` önekiyle tan
 - Yanıt akarken cümlelere bölünür; ilk cümle hemen seslendirilir, diğerleri kuyruğa girip arka arkaya çalınır. Metin, sesiyle birlikte balonda belirir.
 - Avatar konuşurken yazmaya ya da konuşmaya başlarsanız susar ve kuyruk temizlenir. Durum etiketindeki kare düğme de susturur.
 - Başlıktaki **hoparlör düğmesi** sesi kapatır: yanıtlar yalnızca metin olur, avatar boşta kalır. Yanındaki yazı düğmesi avatarı gizleyip mesaj listesini büyütür.
-- Avatar varlıkları (`public/viseme-rig/`, toplam ~0,8 MB) yalnızca kutu ilk açıldığında indirilir.
+- Avatar varlıkları (`web/public/viseme-rig/`, toplam ~0,8 MB) yalnızca kutu ilk açıldığında indirilir.
 
 ### Uç noktalar ve sınırlar
 
@@ -73,14 +90,14 @@ Anahtarlar yalnızca sunucuda (`server/avatar.ts`) okunur; `VITE_` önekiyle tan
 
 ```powershell
 cd viseme_analysis\scripts
-..\.venv\Scripts\python s11_assets_v3.py          # public/viseme-rig/ atlas + manifest, out_v3/contact_all_v3.png (yama burnun altında)
+..\.venv\Scripts\python s11_assets_v3.py          # web/public/viseme-rig/ atlas + manifest, out_v3/contact_all_v3.png (yama burnun altında)
 ..\.venv\Scripts\python c01_voices.py             # tüm OpenAI sesleriyle örnek cümle -> viseme_analysis/voices/
 ..\.venv\Scripts\python c02_calibration_data.py   # 30 cümle TTS + Whisper kelime zamanları
 cd ..\..
 node scripts/avatar-calibrate.mjs --tune            # alignText hata ölçümü ve ayarı -> out_v2/calibration.json
 ```
 
-OpenAI TTS zaman damgası vermediği için harf zamanları tarayıcıda sesten tahmin edilir (`src/video-avatar/align.ts`). Zaman damgası veren bir TTS (ör. ElevenLabs with-timestamps) eklemek için `src/video-avatar/timing.ts` içindeki `TimingProvider` arayüzünü uygulayıp `AvatarConversation`'a verin.
+OpenAI TTS zaman damgası vermediği için harf zamanları tarayıcıda sesten tahmin edilir (`web/src/video-avatar/align.ts`). Zaman damgası veren bir TTS (ör. ElevenLabs with-timestamps) eklemek için `web/src/video-avatar/timing.ts` içindeki `TimingProvider` arayüzünü uygulayıp `AvatarConversation`'a verin.
 
 ### Gerçek tarayıcı testi ve gecikme ölçümü
 
@@ -92,7 +109,7 @@ Kendi görünmez Chrome'unu açar; gerçek sohbet, TTS ve STT çağrısı yapar 
 
 ## OpenAI bağlantısı
 
-`.env.example` dosyasını `.env.local` olarak kopyalayıp kendi API anahtarınızı ekleyin:
+`backend/.env.example` dosyasını `backend/.env.local` olarak kopyalayıp kendi API anahtarınızı ekleyin:
 
 ```dotenv
 OPENAI_API_KEY=anahtarinizi_buraya_ekleyin
@@ -135,7 +152,7 @@ Kaynaklar: [Synthesia anahtar oluşturma](https://docs.synthesia.io/docs/develop
 
 Bu seçenek Gemini'nin yerleşik canlı avatar videosunu kullanır; yerel sprite avatarı veya Synthesia'ya yönlendirme yapmaz. Başlangıç avatarı **Ben**, ses **Puck**, dil Türkçedir. Varsayılan mod Synthesia olarak kalır.
 
-1. [Google Cloud Console](https://console.cloud.google.com/) üst çubuğundaki proje menüsünden **Yeni proje** oluşturun. Görünen ad `lipsysncdemo` olabilir; oluşan **Proje Kimliği**ni alın (proje numarası veya görünen adı değil).
+1. [Google Cloud Console](https://console.cloud.google.com/) üst çubuğundaki proje menüsünden **Yeni proje** oluşturun. Görünen ad `lipsysnc` olabilir; oluşan **Proje Kimliği**ni alın (proje numarası veya görünen adı değil).
 2. Projeye faturalandırma hesabı bağlayın. **API'ler ve Hizmetler → Kitaplık** bölümünden **Vertex AI API** (`aiplatform.googleapis.com`) etkinleştirin. Hesabınızın projede bu servisi kullanma yetkisi olmalı; proje sahibi değilseniz yöneticiden **Vertex AI User** rolünü isteyin.
 3. Windows'ta kurulu Google Cloud CLI ile PowerShell'de aşağıdaki komutları çalıştırın. `PROJE_KIMLIGI` yerine oluşturduğunuz kimliği yazın. Giriş tarayıcıda tamamlanır; parola veya erişim dosyasını sohbete göndermeyin.
 
@@ -154,7 +171,7 @@ GEMINI_LIVE_MODEL=gemini-3.8-live
 GEMINI_AVATAR_NAME=Ben
 ```
 
-Bu bağlantı standart bir Gemini AI Studio API anahtarı kullanmaz. Kimlik doğrulaması sunucudaki **Application Default Credentials** ile yapılır; OAuth erişim jetonu tarayıcıya gönderilmez. Alternatif olarak `GOOGLE_APPLICATION_CREDENTIALS` alanına yerel bir servis hesabı dosyasının yolunu verebilirsiniz; dosyayı `public/` içine veya Git'e koymayın.
+Bu bağlantı standart bir Gemini AI Studio API anahtarı kullanmaz. Kimlik doğrulaması sunucudaki **Application Default Credentials** ile yapılır; OAuth erişim jetonu tarayıcıya gönderilmez. Alternatif olarak `GOOGLE_APPLICATION_CREDENTIALS` alanına yerel bir servis hesabı dosyasının yolunu verebilirsiniz; dosyayı `web/public/` içine veya Git'e koymayın.
 
 Sayfayı yenileyin, panodaki **Avatar** kutusundan **Gemini** seçin, sohbeti açıp mikrofon düğmesine basın. Başlangıç selamlaması ilk avatar görüntüsünü oluşturur. Mikrofon 16 kHz mono PCM gönderir; Gemini'nin sesle birlikte ürettiği fMP4 videosu tek oynatıcıda açılır. Metin görünümüne geçmek görüşmeyi kesmez. Konuşarak araya girme Google'ın otomatik konuşma algılamasıyla yapılır; avatarın küçük durdurma düğmesi o anki yanıt oynatımını susturur. Mikrofon düğmesi, X, mod değişimi veya sayfadan ayrılma tüm bağlantıyı kapatır. Görüşmeler 9 dakika sonunda kapanır ve yeniden başlatılabilir.
 
@@ -175,41 +192,49 @@ Kaynaklar: [Google Cloud başlangıç](https://docs.cloud.google.com/gemini-ente
 ## Dosyalar
 
 ```text
-src/App.tsx                  Sohbet penceresi, ayarlar ve mesaj akışı
-src/style.css                Boş sayfa ve duyarlı sohbet arayüzü
-src/avatar/Avatar.tsx        Avatar canvas'ı ve göz hareketleri
-src/avatar/renderer.ts       Sabit base + ağız + göz çizimi
-src/avatar/poses.ts          On iki ağız pozu ve ara geçişler
-src/avatar/speech.ts         Yerel Türkçe TTS ve metin eşlemesi
-src/avatar/audio.ts          Ses dosyasından ağız hareketleri
-src/avatar/eyes.ts           Seyrek göz hareketleri
-src/video-avatar/player.ts   Video avatar: canvas çizimi, ses saatine kilitli ağız, göz kırpma, baş hareketi
-src/video-avatar/visemes.ts  Türkçe harf -> viseme, geçişler, ses şiddeti bağlantısı
-src/video-avatar/align.ts    alignText: sesten harf zamanlaması tahmini
-src/video-avatar/timing.ts   TimingProvider arayüzü
-src/chat/assistant.ts        Sohbet akışı -> cümle -> TTS -> avatar kuyruğu, söz kesme
-src/chat/voice-input.ts      Bas-konuş mikrofonu ve VAD
-server/avatar.ts             /api/avatar/chat, tts, stt uç noktaları
-server/persona.md            Asistanın sistem promptu
-public/viseme-rig/           Video avatar atlası (1x/2x WebP), manifest, demo sesi
-src/chat/settings.ts         Sağlayıcı seçenekleri ve yerel kayıt
-src/chat/recorder.ts         Mikrofon, ses dosyası ve kaynak temizliği
-src/chat/realtime.ts         WebRTC, canlı transkriptler ve oturum temizliği
-src/chat/synthesia.ts        LiveKit mikrofonu, avatar videosu ve veri kanalı
-src/chat/gemini.ts           Gemini mikrofonu, WebSocket ve konuşma yaşam döngüsü
-src/chat/gemini-player.ts    Ses içeren fMP4 avatar akışını oynatan MediaSource
-server/realtime.ts           Sunucuda kalan anahtar, SDP aktarımı ve oturum kapatma
-server/synthesia.ts          Synthesia durum bilgisi, oda jetonu ve odayı kapatma
-server/synthesia-manager.ts  Agent sürecinin otomatik başlatılması ve kapatılması
-server/synthesia-agent.ts    OpenAI Realtime + Synthesia avatar ses/video köprüsü
-server/gemini.ts             Sunucuda Google Cloud OAuth ve Gemini Live bağlantısı
-public/gemini-pcm-worklet.js  Mikrofonu 16kHz PCM'e dönüştüren AudioWorklet
-vite.config.ts              Yerel geliştirme/önizleme sunucusuna API uç noktaları
-public/mouth-rig/            On iki ağız PNG'si, maske ve manifest
-public/eye-rig/              Yedi göz PNG'si ve birleşik base
-scripts/prepare-*.ps1        Özgün kaynaklardan katmanları yeniden çıkarma
-tests/                      Avatar zamanlaması ve mikrofon yaşam döngüsü
-scripts/browser-qa.mjs      Arayüz, gerçek medya API'leri ve piksel kontrolü
+web/src/App.tsx                   Sohbet penceresi, ayarlar ve mesaj akışı
+web/src/style.css                 Boş sayfa ve duyarlı sohbet arayüzü
+web/src/avatar/Avatar.tsx         Avatar canvas'ı ve göz hareketleri
+web/src/avatar/renderer.ts        Sabit base + ağız + göz çizimi
+web/src/avatar/poses.ts           On iki ağız pozu ve ara geçişler
+web/src/avatar/speech.ts          Yerel Türkçe TTS ve metin eşlemesi
+web/src/avatar/audio.ts           Ses dosyasından ağız hareketleri
+web/src/avatar/eyes.ts            Seyrek göz hareketleri
+web/src/video-avatar/player.ts    Video avatar: canvas çizimi, ses saatine kilitli ağız, göz kırpma, baş hareketi
+web/src/video-avatar/visemes.ts   Türkçe harf -> viseme, geçişler, ses şiddeti bağlantısı
+web/src/video-avatar/align.ts     alignText: sesten harf zamanlaması tahmini
+web/src/video-avatar/timing.ts    TimingProvider arayüzü
+web/src/chat/assistant.ts         Sohbet akışı -> cümle -> TTS -> avatar kuyruğu, söz kesme
+web/src/chat/voice-input.ts       Bas-konuş mikrofonu ve VAD
+backend/src/server.ts             Backend HTTP sunucusu: /api uç noktaları ve Gemini WebSocket
+backend/src/env.ts                backend/.env ve .env.local okuma
+backend/src/rag.ts                Bilgi tabanı yükleme, role göre filtreleme ve arama
+backend/src/rag-prompt.ts         rag/rag-prompt.md okuma ve yer tutucular
+backend/src/avatar.ts             /api/avatar/chat, tts, stt uç noktaları
+backend/src/persona.md            Asistanın sistem promptu
+rag/rag-prompt.md                 Gemini + bilgi tabanı (RAG) sistem talimatı ve araç talimatları
+rag/pmi-rag-dummy/                Kurgusal bilgi tabanı belgeleri (rol bazlı)
+web/public/viseme-rig/            Video avatar atlası (1x/2x WebP), manifest, demo sesi
+web/src/chat/settings.ts          Sağlayıcı seçenekleri ve yerel kayıt
+web/src/chat/recorder.ts          Mikrofon, ses dosyası ve kaynak temizliği
+web/src/chat/realtime.ts          WebRTC, canlı transkriptler ve oturum temizliği
+web/src/chat/synthesia.ts         LiveKit mikrofonu, avatar videosu ve veri kanalı
+web/src/chat/gemini.ts            Gemini mikrofonu, WebSocket ve konuşma yaşam döngüsü
+web/src/chat/gemini-player.ts     Ses içeren fMP4 avatar akışını oynatan MediaSource
+backend/src/realtime.ts           Sunucuda kalan anahtar, SDP aktarımı ve oturum kapatma
+backend/src/synthesia.ts          Synthesia durum bilgisi, oda jetonu ve odayı kapatma
+backend/src/synthesia-manager.ts  Agent sürecinin otomatik başlatılması ve kapatılması
+backend/src/synthesia-agent.ts    OpenAI Realtime + Synthesia avatar ses/video köprüsü
+backend/src/gemini.ts             Sunucuda Google Cloud OAuth ve Gemini Live bağlantısı
+web/public/gemini-pcm-worklet.js  Mikrofonu 16kHz PCM'e dönüştüren AudioWorklet
+web/vite.config.ts                /api isteklerini (WebSocket dahil) backend'e aktaran Vite proxy'si
+web/public/mouth-rig/             On iki ağız PNG'si, maske ve manifest
+web/public/eye-rig/               Yedi göz PNG'si ve birleşik base
+scripts/prepare-*.ps1             Özgün kaynaklardan katmanları yeniden çıkarma
+web/tests/                        Avatar zamanlaması, mikrofon yaşam döngüsü ve istemci testleri
+scripts/browser-qa.mjs            Arayüz, gerçek medya API'leri ve piksel kontrolü
+backend/tests/                    Sunucu, anahtar/origin sınırları, RAG ve Synthesia worker testleri
+scripts/dev.mjs                   Backend ve web projelerini birlikte başlatma
 ```
 
 Çalıştırmak için AvatarLab klasörüne bağımlılık yoktur. Katmanları yeniden üretmek istenirse hazırlama scriptleri özgün kaynak PNG'lerini Downloads klasöründen okur; kaynakları değiştirmez.
@@ -220,6 +245,8 @@ scripts/browser-qa.mjs      Arayüz, gerçek medya API'leri ve piksel kontrolü
 npm.cmd run build
 npm.cmd test
 ```
+
+`npm test` önce backend, sonra web testlerini çalıştırır; `npm test -w backend` ya da `npm test -w web` ile yalnızca biri çalıştırılabilir.
 
 Birim testleri göz/ağız zamanlamasını, ses dosyası oluşumunu, geç gelen mikrofon akışının durdurulmasını, canlı bağlantı yaşam döngüsünü, transkriptleri, kesme/sessize alma işlemlerini ve sunucunun anahtar/origin sınırlarını kapsar. Synthesia testleri iki avatarın doğru kimlikle gönderilmesini, jetonun tek odaya/mikrofona sınırlanmasını, iptal edilen isteğin geç yanıtını, yerel agent sürecinin gerçekten açılıp kapanmasını ve kaynak temizliğini doğrular. Gemini testleri OAuth, kaynak sınırı, WebSocket temizliği, video/transkript aktarımı, gerçek AVC codec tespiti ve farklı mikrofon örnekleme hızlarını kapsar. Gerçek sağlayıcı çağrısı yapılmaz.
 

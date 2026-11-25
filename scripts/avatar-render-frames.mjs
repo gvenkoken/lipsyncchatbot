@@ -11,7 +11,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dir = path.join(root, 'viseme_analysis/out_v2/calib'), out = path.join(root, 'viseme_analysis/out_v2/render');
 fs.mkdirSync(out, { recursive: true });
 const dataset = JSON.parse(fs.readFileSync(path.join(dir, 'dataset.json'), 'utf8'));
-const manifest = JSON.parse(fs.readFileSync(path.join(root, 'public/viseme-rig/manifest.json'), 'utf8'));
+const manifest = JSON.parse(fs.readFileSync(path.join(root, 'web/public/viseme-rig/manifest.json'), 'utf8'));
 const FPS = 30;
 const ids = process.argv.slice(2);
 for (const item of dataset.items.filter(entry => ids.includes(entry.id))) {
